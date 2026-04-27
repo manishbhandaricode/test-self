@@ -7,7 +7,12 @@ Python serverless API. The dashboard includes an interactive savings meter that
 changes color as the savings rate improves or drops. It also supports light and
 dark themes with high-contrast brand colors: `#092C95` for light mode and
 `#07BB67` for dark mode. Plan fields preview live before saving, invalid plans
-are blocked, and reset/demo actions require a confirmation code.
+are blocked, and reset uses a destructive confirmation flow.
+
+The web dashboard is designed as a personal finance SaaS command center with
+an app shell, empty state onboarding, modals for expenses and categories, smart
+insights, SVG charts, budget health, transaction search/filtering, and a
+destructive reset confirmation flow.
 
 ## Local Console Usage
 
