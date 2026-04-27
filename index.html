@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,19 +7,54 @@
     <style>
       :root {
         color-scheme: dark;
-        --bg: #070812;
-        --panel: rgba(12, 17, 33, 0.82);
-        --panel-strong: rgba(18, 25, 48, 0.96);
-        --line: rgba(255, 255, 255, 0.13);
-        --ink: #f8fbff;
-        --muted: #aab6cf;
-        --soft: #77839d;
-        --cyan: #16e8ff;
-        --mint: #24ff9a;
+        --brand: #07BB67;
+        --brand-soft: rgba(7, 187, 103, 0.18);
+        --brand-glow: rgba(7, 187, 103, 0.34);
+        --bg: #050806;
+        --bg-2: #07140d;
+        --panel: rgba(8, 14, 12, 0.84);
+        --panel-strong: rgba(10, 18, 15, 0.96);
+        --line: rgba(255, 255, 255, 0.14);
+        --ink: #f7fff9;
+        --muted: #b2c8bc;
+        --soft: #7f9589;
+        --cyan: #07BB67;
+        --mint: #07BB67;
         --pink: #ff4fd8;
         --gold: #ffd166;
         --red: #ff4d6d;
         --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+        --input-bg: rgba(255, 255, 255, 0.07);
+        --grid-line: rgba(255, 255, 255, 0.035);
+        --hero-sheen: rgba(7, 187, 103, 0.38);
+        --button-ink: #02140b;
+        --meter-track: rgba(255, 255, 255, 0.12);
+      }
+
+      :root[data-theme="light"] {
+        color-scheme: light;
+        --brand: #092C95;
+        --brand-soft: rgba(9, 44, 149, 0.11);
+        --brand-glow: rgba(9, 44, 149, 0.2);
+        --bg: #f7f9ff;
+        --bg-2: #ffffff;
+        --panel: rgba(255, 255, 255, 0.9);
+        --panel-strong: rgba(255, 255, 255, 0.98);
+        --line: rgba(9, 44, 149, 0.16);
+        --ink: #071331;
+        --muted: #53627d;
+        --soft: #73809a;
+        --cyan: #092C95;
+        --mint: #092C95;
+        --pink: #8f2cff;
+        --gold: #9a6500;
+        --red: #bd1f36;
+        --shadow: 0 24px 70px rgba(9, 44, 149, 0.14);
+        --input-bg: rgba(9, 44, 149, 0.045);
+        --grid-line: rgba(9, 44, 149, 0.05);
+        --hero-sheen: rgba(9, 44, 149, 0.22);
+        --button-ink: #ffffff;
+        --meter-track: rgba(9, 44, 149, 0.13);
       }
 
       * {
@@ -34,11 +69,14 @@
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", sans-serif;
         background:
-          radial-gradient(circle at 14% 10%, rgba(22, 232, 255, 0.22), transparent 28%),
+          radial-gradient(circle at 14% 10%, var(--brand-soft), transparent 28%),
           radial-gradient(circle at 84% 8%, rgba(255, 79, 216, 0.2), transparent 25%),
-          radial-gradient(circle at 50% 94%, rgba(36, 255, 154, 0.14), transparent 34%),
-          linear-gradient(135deg, #070812 0%, #111832 58%, #080914 100%);
+          radial-gradient(circle at 50% 94%, var(--brand-soft), transparent 34%),
+          linear-gradient(135deg, var(--bg) 0%, var(--bg-2) 58%, var(--bg) 100%);
         color: var(--ink);
+        transition:
+          background 220ms ease,
+          color 220ms ease;
       }
 
       body::before {
@@ -47,8 +85,8 @@
         inset: 0;
         pointer-events: none;
         background-image:
-          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+          linear-gradient(var(--grid-line) 1px, transparent 1px),
+          linear-gradient(90deg, var(--grid-line) 1px, transparent 1px);
         background-size: 46px 46px;
         mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 78%);
       }
@@ -89,7 +127,7 @@
         position: absolute;
         inset: auto -10% -45% 30%;
         height: 190px;
-        background: linear-gradient(90deg, transparent, rgba(22, 232, 255, 0.45), transparent);
+        background: linear-gradient(90deg, transparent, var(--hero-sheen), transparent);
         filter: blur(30px);
         animation: sweep 5s ease-in-out infinite;
       }
@@ -111,6 +149,38 @@
         font-weight: 900;
         letter-spacing: 0;
         text-transform: uppercase;
+      }
+
+      .hero-top {
+        display: flex;
+        justify-content: space-between;
+        gap: 12px;
+        align-items: center;
+        margin-bottom: 12px;
+      }
+
+      .theme-toggle {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        min-height: 40px;
+        border: 1px solid var(--line);
+        border-radius: 999px;
+        padding: 0 13px;
+        color: var(--ink);
+        background: var(--input-bg);
+        box-shadow: none;
+      }
+
+      .theme-toggle span {
+        display: inline-grid;
+        place-items: center;
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        color: var(--button-ink);
+        background: var(--brand);
+        font-size: 0.78rem;
       }
 
       h1 {
@@ -209,7 +279,7 @@
       }
 
       .meter-track {
-        stroke: rgba(255, 255, 255, 0.12);
+        stroke: var(--meter-track);
       }
 
       .meter-progress {
@@ -287,6 +357,17 @@
         background: rgba(10, 31, 46, 0.84);
       }
 
+      :root[data-theme="light"] .ticker.low {
+        border-color: rgba(189, 31, 54, 0.28);
+        background: rgba(255, 246, 248, 0.92);
+      }
+
+      :root[data-theme="light"] .ticker.moderate,
+      :root[data-theme="light"] .ticker.strong {
+        border-color: rgba(9, 44, 149, 0.22);
+        background: rgba(255, 255, 255, 0.92);
+      }
+
       .summary-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -310,12 +391,12 @@
 
       .metric:hover {
         transform: translateY(-3px);
-        border-color: rgba(22, 232, 255, 0.48);
-        background: rgba(20, 29, 55, 0.9);
+        border-color: var(--brand);
+        background: var(--panel-strong);
       }
 
       .metric:focus-visible {
-        outline: 3px solid rgba(22, 232, 255, 0.38);
+        outline: 3px solid var(--brand-glow);
         outline-offset: 3px;
       }
 
@@ -401,7 +482,7 @@
         border: 1px solid var(--line);
         border-radius: 12px;
         padding: 0 13px;
-        background: rgba(255, 255, 255, 0.07);
+        background: var(--input-bg);
         color: var(--ink);
         font: inherit;
         outline: none;
@@ -413,8 +494,8 @@
 
       input:focus,
       select:focus {
-        border-color: rgba(22, 232, 255, 0.85);
-        box-shadow: 0 0 0 4px rgba(22, 232, 255, 0.12);
+        border-color: var(--brand);
+        box-shadow: 0 0 0 4px var(--brand-soft);
       }
 
       .form-grid {
@@ -435,7 +516,7 @@
         border: 0;
         border-radius: 999px;
         padding: 0 18px;
-        color: #041116;
+        color: var(--button-ink);
         background: linear-gradient(135deg, var(--cyan), var(--mint));
         font: inherit;
         font-weight: 900;
@@ -454,8 +535,8 @@
         position: relative;
         overflow: hidden;
         box-shadow:
-          0 0 18px rgba(22, 232, 255, 0.54),
-          0 0 48px rgba(36, 255, 154, 0.24);
+          0 0 18px var(--brand-glow),
+          0 0 48px var(--brand-soft);
         animation: buttonGlow 1.8s ease-in-out infinite;
       }
 
@@ -472,7 +553,7 @@
         50% {
           box-shadow:
             0 0 28px rgba(255, 79, 216, 0.62),
-            0 0 68px rgba(22, 232, 255, 0.34);
+            0 0 68px var(--brand-glow);
         }
       }
 
@@ -485,7 +566,7 @@
 
       .ghost {
         color: var(--ink);
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--input-bg);
         border: 1px solid var(--line);
       }
 
@@ -515,7 +596,7 @@
         border: 1px solid var(--line);
         border-radius: 14px;
         padding: 10px;
-        background: rgba(255, 255, 255, 0.06);
+        background: var(--input-bg);
       }
 
       .pill-row strong,
@@ -536,7 +617,7 @@
         border: 1px solid var(--line);
         border-radius: 16px;
         padding: 12px;
-        background: rgba(255, 255, 255, 0.06);
+        background: var(--input-bg);
       }
 
       .insight span {
@@ -591,7 +672,7 @@
         height: 10px;
         min-width: 160px;
         border-radius: 999px;
-        background: rgba(255, 255, 255, 0.1);
+        background: var(--brand-soft);
         overflow: hidden;
       }
 
@@ -625,7 +706,7 @@
         border: 1px solid var(--line);
         border-radius: 16px;
         padding: 13px;
-        background: rgba(255, 255, 255, 0.06);
+        background: var(--input-bg);
       }
 
       .expense-card div {
@@ -692,10 +773,16 @@
     <main>
       <header>
         <section class="hero">
-          <p class="eyebrow">INR Salary and Budget Studio</p>
+          <div class="hero-top">
+            <p class="eyebrow">INR Salary and Budget Studio</p>
+            <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode">
+              <span id="theme-icon">D</span>
+              <strong id="theme-label">Dark</strong>
+            </button>
+          </div>
           <h1>Rupee Command Center</h1>
           <p class="subtitle">
-            Set your monthly salary, decide how much you want to spend, enter real expenses, and keep savings visible at all times.
+            A detailed money operating system for salary, budget planning, category limits, real expenses, savings health, and product-grade spending insights.
           </p>
         </section>
         <aside class="ticker moderate" id="savings-meter-card">
@@ -848,6 +935,18 @@
                 <span>Planned savings</span>
                 <strong id="planned-savings">INR 0.00</strong>
               </div>
+              <div class="insight">
+                <span>Category plan</span>
+                <strong id="category-budget-total">INR 0.00</strong>
+              </div>
+              <div class="insight">
+                <span>Transactions</span>
+                <strong id="transaction-count">0</strong>
+              </div>
+              <div class="insight">
+                <span>Top spend</span>
+                <strong id="top-category">None</strong>
+              </div>
             </div>
           </section>
 
@@ -877,6 +976,7 @@
 
     <script>
       const storageKey = "rupee-command-center-v3";
+      const themeStorageKey = "rupee-command-center-theme";
       const manualCategory = "Manual Spending Adjustment";
       const currency = new Intl.NumberFormat("en-IN", {
         style: "currency",
@@ -904,6 +1004,8 @@
       };
 
       let state = loadState();
+      let activeTheme = localStorage.getItem(themeStorageKey) || "dark";
+      applyTheme(activeTheme);
 
       function clone(value) {
         return JSON.parse(JSON.stringify(value));
@@ -933,6 +1035,17 @@
 
       function saveState() {
         localStorage.setItem(storageKey, JSON.stringify(state));
+      }
+
+      function applyTheme(theme) {
+        activeTheme = theme === "light" ? "light" : "dark";
+        document.documentElement.dataset.theme = activeTheme;
+        localStorage.setItem(themeStorageKey, activeTheme);
+        document.getElementById("theme-icon").textContent = activeTheme === "light" ? "L" : "D";
+        document.getElementById("theme-label").textContent = activeTheme === "light" ? "Light" : "Dark";
+        document
+          .getElementById("theme-toggle")
+          .setAttribute("aria-label", `Switch to ${activeTheme === "light" ? "dark" : "light"} mode`);
       }
 
       function money(value) {
@@ -999,6 +1112,9 @@
         const savingsRate =
           report.totals.salary > 0 ? Math.max((report.totals.savings / report.totals.salary) * 100, 0) : 0;
         const unallocatedBudget = report.totals.plannedBudget - report.totals.categoryBudget;
+        const topCategory = report.categories
+          .filter((category) => category.spent > 0)
+          .sort((first, second) => second.spent - first.spent)[0];
 
         document.getElementById("monthly-salary").textContent = money(report.totals.salary);
         document.getElementById("planned-budget").textContent = money(report.totals.plannedBudget);
@@ -1007,6 +1123,9 @@
         document.getElementById("budget-left").textContent = money(report.totals.budgetLeft);
         document.getElementById("unallocated-budget").textContent = money(unallocatedBudget);
         document.getElementById("planned-savings").textContent = money(report.totals.plannedSavings);
+        document.getElementById("category-budget-total").textContent = money(report.totals.categoryBudget);
+        document.getElementById("transaction-count").textContent = state.expenses.length;
+        document.getElementById("top-category").textContent = topCategory ? topCategory.category : "None";
         document.getElementById("savings-rate").textContent = `${Math.round(savingsRate)}%`;
         updateSavingsMeter(savingsRate, report.totals.savings);
 
@@ -1250,6 +1369,10 @@
           event.preventDefault();
           startMetricEdit("salary");
         }
+      });
+
+      document.getElementById("theme-toggle").addEventListener("click", () => {
+        applyTheme(activeTheme === "light" ? "dark" : "light");
       });
 
       document.getElementById("plan-form").addEventListener("submit", (event) => {

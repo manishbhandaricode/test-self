@@ -4,7 +4,9 @@ A dependency-free Python budget tracker with a Vercel-ready premium dashboard,
 monthly salary planning, editable spend targets, custom budget categories,
 real expense entry, INR formatting, savings tracking, browser storage, and a
 Python serverless API. The dashboard includes an interactive savings meter that
-changes color as the savings rate improves or drops.
+changes color as the savings rate improves or drops. It also supports light and
+dark themes with high-contrast brand colors: `#092C95` for light mode and
+`#07BB67` for dark mode.
 
 ## Local Console Usage
 
