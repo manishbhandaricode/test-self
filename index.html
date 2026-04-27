@@ -9,8 +9,8 @@
         color-scheme: dark;
         --bg: #050711;
         --bg-soft: #090D18;
-        --surface: #0D111C;
-        --surface-elevated: #131A2A;
+        --surface: #0E1424;
+        --surface-elevated: #141B2D;
         --card: rgba(255,255,255,0.055);
         --card-strong: rgba(255,255,255,0.08);
         --border: rgba(255,255,255,0.10);
@@ -35,7 +35,7 @@
         --bg: #F6F8FB;
         --bg-soft: #F8FAFC;
         --surface: #FFFFFF;
-        --surface-elevated: #F1F5F9;
+        --surface-elevated: #FFFFFF;
         --card: #FFFFFF;
         --card-strong: #F8FAFC;
         --border: #E2E8F0;
@@ -74,6 +74,19 @@
         color: var(--text);
         font-family: Inter, Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         transition: background 220ms ease, color 220ms ease;
+      }
+
+      body::before {
+        content: "";
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        pointer-events: none;
+        background-image:
+          linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+        background-size: 48px 48px;
+        mask-image: radial-gradient(circle at 24% 10%, black, transparent 58%);
       }
 
       button, input, select { font: inherit; }
@@ -154,7 +167,7 @@
         background: var(--accent-soft);
       }
 
-      .main { min-width: 0; padding: 24px; padding-bottom: 96px; }
+      .main { min-width: 0; padding: 28px; padding-bottom: 104px; }
 
       .header {
         display: flex;
@@ -215,7 +228,7 @@
 
       :root[data-theme="light"] .theme-toggle { --shift: 70px; padding: 0 48px 0 12px; }
 
-      .grid { display: grid; gap: 16px; }
+      .grid { display: grid; gap: 24px; }
       .dashboard-grid { grid-template-columns: minmax(0, 1.45fr) minmax(330px, 0.55fr); align-items: start; }
       .two-col { grid-template-columns: 1fr 1fr; }
       .kpi-grid { grid-template-columns: repeat(6, minmax(0, 1fr)); }
@@ -227,7 +240,10 @@
         box-shadow: var(--shadow);
         backdrop-filter: blur(18px);
         animation: enter 240ms ease both;
+        transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 220ms ease;
       }
+
+      .card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
 
       .grid > .card:nth-child(2),
       .grid > section:nth-child(2) { animation-delay: 40ms; }
@@ -243,30 +259,47 @@
         justify-content: space-between;
         align-items: flex-start;
         gap: 12px;
-        padding: 18px 18px 0;
+        padding: 24px 24px 0;
       }
 
-      .card-title { margin: 0; font-size: 1.08rem; letter-spacing: 0; }
+      .card-title { margin: 0; font-size: clamp(1.15rem, 2vw, 1.45rem); letter-spacing: 0; }
       .card-subtitle { margin: 5px 0 0; color: var(--muted); font-size: 0.9rem; }
-      .card-body { padding: 18px; }
+      .card-body { padding: 24px; }
 
       .hero-card {
-        min-height: 310px;
+        min-height: 370px;
+        border-color: var(--border-strong);
         overflow: hidden;
         background:
-          radial-gradient(circle at 16% 12%, color-mix(in srgb, var(--accent), transparent 68%), transparent 34%),
-          linear-gradient(135deg, color-mix(in srgb, var(--surface-elevated), var(--accent) 8%), var(--card));
+          radial-gradient(circle at 14% 12%, color-mix(in srgb, var(--accent), transparent 58%), transparent 34%),
+          radial-gradient(circle at 82% 18%, color-mix(in srgb, var(--accent-2), transparent 72%), transparent 30%),
+          linear-gradient(135deg, color-mix(in srgb, var(--surface-elevated), var(--accent) 10%), var(--card));
       }
 
-      .hero-layout { display: grid; grid-template-columns: minmax(0, 1fr) 290px; gap: 18px; align-items: end; }
+      .hero-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: end; }
       .eyebrow { margin: 0 0 10px; color: var(--accent); font-size: 0.78rem; font-weight: 950; text-transform: uppercase; }
       .hero-number { margin: 0; font-size: clamp(3rem, 7vw, 5.8rem); line-height: 0.92; letter-spacing: 0; }
       .hero-copy { max-width: 700px; color: var(--muted); line-height: 1.55; font-size: 1.02rem; }
+      .hero-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
+      .hero-chip { border: 1px solid var(--border); border-radius: 18px; padding: 12px; background: color-mix(in srgb, var(--card-strong), transparent 8%); }
+      .hero-chip span { display: block; color: var(--muted); font-size: 0.72rem; font-weight: 850; text-transform: uppercase; }
+      .hero-chip strong { display: block; margin-top: 6px; font-size: 1.02rem; }
 
-      .stat-card { min-height: 118px; padding: 16px; }
+      .stat-card { min-height: 136px; padding: 18px; }
+      .stat-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .stat-icon, .insight-icon {
+        display: grid;
+        place-items: center;
+        width: 38px;
+        height: 38px;
+        border-radius: 14px;
+        color: var(--accent);
+        background: var(--accent-soft);
+        font-weight: 950;
+      }
       .mini-stat { min-height: 92px; border: 1px solid var(--border); border-radius: 16px; padding: 14px; background: var(--surface-elevated); }
       .stat-label { color: var(--muted); font-size: 0.76rem; font-weight: 950; text-transform: uppercase; }
-      .stat-value { display: block; margin-top: 10px; font-size: clamp(1.12rem, 1.7vw, 1.55rem); font-weight: 950; word-break: break-word; }
+      .stat-value { display: block; margin-top: 10px; font-size: clamp(1.22rem, 1.9vw, 1.75rem); font-weight: 800; word-break: break-word; }
       .stat-help { display: block; margin-top: 8px; color: var(--muted); font-size: 0.78rem; }
 
       .meter { --progress: 0; --angle: -180deg; --meter-color: var(--accent); position: relative; height: 154px; border-radius: 20px; background: var(--surface-elevated); overflow: hidden; }
@@ -279,7 +312,8 @@
       .meter-label strong { display: block; font-size: 1.36rem; }
 
       .insight-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-      .insight-card { padding: 16px; }
+      .insight-card { padding: 18px; }
+      .insight-head { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 12px; }
       .insight-card strong { display: block; margin-bottom: 8px; }
       .insight-card p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
 
@@ -329,7 +363,8 @@
 
       .bottom-nav { display: none; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 45; grid-template-columns: repeat(5, 1fr); gap: 6px; border: 1px solid var(--border); border-radius: 22px; padding: 8px; background: color-mix(in srgb, var(--surface), transparent 4%); box-shadow: var(--shadow); }
       .bottom-nav button { min-height: 44px; border: 0; border-radius: 16px; color: var(--muted); background: transparent; font-size: 0.78rem; font-weight: 850; }
-      .bottom-nav button.active { color: var(--button-text); background: var(--accent); }
+      .bottom-nav button { transition: color 160ms ease, background 160ms ease, transform 160ms ease; }
+      .bottom-nav button.active { color: var(--button-text); background: var(--accent); box-shadow: 0 10px 28px color-mix(in srgb, var(--accent), transparent 75%); transform: translateY(-2px); }
 
       .sticky-add {
         position: fixed;
@@ -343,7 +378,7 @@
         box-shadow: 0 18px 44px color-mix(in srgb, var(--accent), transparent 72%);
       }
 
-      @keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
       @keyframes modalIn { to { transform: scale(1); } }
       @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
@@ -364,9 +399,9 @@
       @media (max-width: 760px) {
         .app-shell { display: block; }
         .sidebar { display: none; }
-        .main { padding: 14px; }
+        .main { padding: 16px; }
         .header, .header-actions { align-items: stretch; flex-direction: column; }
-        .kpi-grid, .filters, .form-grid, .empty-state, .insight-grid { grid-template-columns: 1fr; }
+        .kpi-grid, .filters, .form-grid, .empty-state, .insight-grid, .hero-metrics { grid-template-columns: 1fr; }
         .hero-number { font-size: clamp(2.4rem, 14vw, 4rem); }
         table.transactions-table { display: none; }
         .mobile-cards { display: grid; }
@@ -413,39 +448,39 @@
       function demoState() {
         const month = selectedMonth;
         const tx = [
-          ["Nestaway Rent", "Rent", 18000, 1, "Monthly rent", "Bank"],
-          ["BigBasket", "Food", 2650, 2, "Groceries", "UPI"],
-          ["Uber", "Transport", 520, 3, "Airport ride", "UPI"],
-          ["Airtel", "Bills", 999, 4, "Fiber bill", "Card"],
-          ["Swiggy", "Food", 780, 5, "Dinner", "UPI"],
-          ["Apollo Pharmacy", "Health", 1250, 6, "Medicines", "UPI"],
-          ["Metro Card", "Transport", 1000, 7, "Monthly commute", "UPI"],
-          ["Amazon", "Shopping", 2199, 8, "Home essentials", "Card"],
+          ["Rent", "Rent", 18000, 1, "Monthly rent", "Bank"],
+          ["BigBasket groceries", "Food", 2650, 2, "Weekly groceries", "UPI"],
+          ["Swiggy", "Food", 780, 3, "Dinner order", "UPI"],
+          ["Zomato", "Food", 640, 4, "Lunch", "UPI"],
+          ["Uber", "Transport", 520, 5, "Cab ride", "UPI"],
+          ["Metro recharge", "Transport", 1000, 6, "Monthly commute", "UPI"],
+          ["Electricity bill", "Bills", 1850, 7, "Power bill", "Bank"],
+          ["Mobile recharge", "Bills", 399, 8, "Prepaid recharge", "UPI"],
           ["Netflix", "Subscriptions", 649, 9, "Streaming", "Card"],
-          ["Zomato", "Food", 640, 10, "Lunch", "UPI"],
-          ["Electricity Board", "Bills", 1850, 11, "Power bill", "Bank"],
-          ["Myntra", "Shopping", 1899, 12, "Shirt", "Card"],
-          ["Cult.fit", "Health", 999, 13, "Class pack", "UPI"],
-          ["Auto", "Transport", 260, 14, "Local travel", "Cash"],
-          ["Hotstar", "Subscriptions", 299, 15, "Subscription", "Card"],
-          ["Nature Basket", "Food", 1450, 16, "Groceries", "UPI"],
-          ["BookMyShow", "Other", 950, 17, "Movie", "UPI"],
-          ["DMart", "Food", 3150, 19, "Monthly stock-up", "Card"],
-          ["Ola", "Transport", 430, 21, "Cab", "UPI"],
-          ["Tata Cliq", "Shopping", 1599, 23, "Accessories", "Card"],
+          ["Spotify", "Subscriptions", 119, 10, "Music subscription", "Card"],
+          ["Amazon", "Shopping", 2199, 11, "Home essentials", "Card"],
+          ["Pharmacy", "Health", 1250, 12, "Medicines", "UPI"],
+          ["Coffee", "Food", 320, 13, "Cafe meeting", "UPI"],
+          ["Restaurant", "Food", 1850, 14, "Dining out", "Card"],
+          ["Fuel", "Transport", 2500, 15, "Petrol refill", "Card"],
+          ["UPI transfer", "Other", 900, 16, "Personal transfer", "UPI"],
+          ["Gym", "Health", 999, 17, "Fitness class", "UPI"],
+          ["Doctor visit", "Health", 1200, 18, "Consultation", "UPI"],
+          ["Groceries", "Food", 3150, 20, "Monthly stock-up", "Card"],
+          ["Miscellaneous", "Other", 750, 22, "Small purchases", "Cash"],
         ];
         return {
           salary: 80000,
           monthlyBudget: 45000,
           categories: [
-            cat("Rent", 18000, "🏠", "#38BDF8"),
-            cat("Food", 9000, "🍽", "#00E6A8"),
-            cat("Transport", 4000, "🚕", "#FBBF24"),
-            cat("Shopping", 5000, "🛍", "#FB7185"),
-            cat("Bills", 4000, "🧾", "#0284C7"),
-            cat("Subscriptions", 2000, "▶", "#8B5CF6"),
-            cat("Health", 3000, "❤", "#34D399"),
-            cat("Other", 5000, "⋯", "#94A3B8"),
+            cat("Rent", 18000, "R", "#38BDF8"),
+            cat("Food", 9000, "F", "#00E6A8"),
+            cat("Transport", 4000, "T", "#FBBF24"),
+            cat("Shopping", 5000, "S", "#FB7185"),
+            cat("Bills", 4000, "B", "#0284C7"),
+            cat("Subscriptions", 2000, "P", "#8B5CF6"),
+            cat("Health", 3000, "H", "#34D399"),
+            cat("Other", 5000, "O", "#94A3B8"),
           ],
           transactions: tx.map(([merchant, category, amount, day, description, paymentMode]) =>
             txn(merchant, amount, category, `${month}-${String(day).padStart(2, "0")}`, description, paymentMode),
@@ -682,6 +717,11 @@
                 <p class="eyebrow">Safe to Spend</p>
                 <h2 class="hero-number">${money(report.budgetLeft)}</h2>
                 <p class="hero-copy">${report.budgetLeft < 0 ? `You are over budget by ${money(Math.abs(report.budgetLeft))}. Review critical categories before spending more.` : `${money(report.safeToSpendPerDay)}/day available for the rest of the month. ${healthCopy(report.healthStatus)}`}</p>
+                <div class="hero-metrics">
+                  ${HeroChip("Month progress", `${Math.round(report.monthProgressPercent)}%`)}
+                  ${HeroChip("Budget used", `${Math.round(report.budgetUsedPercent)}%`)}
+                  ${HeroChip("Projected savings", money(report.projectedSavings))}
+                </div>
                 <div class="header-actions" style="margin-top:18px">
                   <button class="btn btn-primary" id="hero-add-expense" type="button">+ Add Expense</button>
                   <button class="btn btn-secondary" id="hero-edit-plan" type="button">Edit Plan</button>
@@ -691,6 +731,10 @@
             </div>
           </section>
         `;
+      }
+
+      function HeroChip(label, value) {
+        return `<div class="hero-chip"><span>${label}</span><strong>${value}</strong></div>`;
       }
 
       function SavingsMeter(report) {
@@ -711,17 +755,17 @@
 
       function KpiCards(report) {
         return [
-          StatCard("Monthly Salary", money(report.salary), "Income this month"),
-          StatCard("Spending Budget", money(report.monthlyBudget), "Planned spend"),
-          StatCard("Total Spent", money(report.totalSpent), `${report.monthTransactions.length} transactions`),
-          StatCard("Budget Left", money(report.budgetLeft), "Safe-to-spend pool"),
-          StatCard("Savings Rate", `${Math.round(report.savingsRate)}%`, "Actual savings"),
-          StatCard("Projected Savings", money(report.projectedSavings), "At current pace"),
+          StatCard("Monthly Salary", money(report.salary), "Income this month", "₹"),
+          StatCard("Spending Budget", money(report.monthlyBudget), "Planned spend", "B"),
+          StatCard("Total Spent", money(report.totalSpent), `${report.monthTransactions.length} transactions`, "S"),
+          StatCard("Budget Left", money(report.budgetLeft), "Safe-to-spend pool", "L"),
+          StatCard("Savings Rate", `${Math.round(report.savingsRate)}%`, "Actual savings", "%"),
+          StatCard("Projected Savings", money(report.projectedSavings), "At current pace", "P"),
         ].join("");
       }
 
-      function StatCard(label, value, help) {
-        return `<article class="card stat-card"><span class="stat-label">${label}</span><strong class="stat-value">${value}</strong><span class="stat-help">${help}</span></article>`;
+      function StatCard(label, value, help, icon = "•") {
+        return `<article class="card stat-card"><div class="stat-top"><span class="stat-label">${label}</span><span class="stat-icon" aria-hidden="true">${icon}</span></div><strong class="stat-value">${value}</strong><span class="stat-help">${help}</span></article>`;
       }
 
       function SmartInsights(report) {
@@ -734,7 +778,7 @@
       }
 
       function InsightCard(insight) {
-        return `<article class="card insight-card"><strong>${insight.title}</strong><p>${insight.text}</p></article>`;
+        return `<article class="card insight-card"><div class="insight-head"><span class="insight-icon" aria-hidden="true">${insight.icon || "i"}</span>${StatusPill(insight.status || "Healthy")}</div><strong>${insight.title}</strong><p>${insight.text}</p></article>`;
       }
 
       function ChartCard(title, subtitle, body) {
@@ -788,7 +832,7 @@
 
       function BudgetHealthRow(item, editable) {
         const status = categoryStatus(item.usage);
-        return `<tr><td><strong>${item.icon || "•"} ${escapeHtml(item.name)}</strong></td><td class="numeric">${money(item.limit)}</td><td class="numeric">${money(item.spent)}</td><td class="numeric">${money(item.remaining)}</td><td>${ProgressBar("", item.usage, `${Math.round(item.usage)}%`, status.color)}</td><td>${StatusPill(status.label)}</td>${editable ? `<td class="numeric"><div class="row-actions"><button class="btn btn-ghost" data-edit-category="${item.id}" type="button">Edit</button><button class="btn btn-ghost" data-delete-category="${item.id}" type="button">Delete</button></div></td>` : ""}</tr>`;
+        return `<tr><td><strong>${item.icon || "-"} ${escapeHtml(item.name)}</strong></td><td class="numeric">${money(item.limit)}</td><td class="numeric">${money(item.spent)}</td><td class="numeric">${money(item.remaining)}</td><td>${ProgressBar("", item.usage, `${Math.round(item.usage)}%`, status.color)}</td><td>${StatusPill(status.label)}</td>${editable ? `<td class="numeric"><div class="row-actions"><button class="btn btn-ghost" data-edit-category="${item.id}" type="button">Edit</button><button class="btn btn-ghost" data-delete-category="${item.id}" type="button">Delete</button></div></td>` : ""}</tr>`;
       }
 
       function StatusPill(label) {
@@ -824,7 +868,7 @@
       }
 
       function TransactionCard(item) {
-        return `<article class="card stat-card"><span class="stat-label">${escapeHtml(item.category)} • ${formatDate(item.date)}</span><strong class="stat-value">${money(item.amount)}</strong><span class="stat-help">${escapeHtml(item.merchant)} • ${escapeHtml(item.paymentMode || "-")} • ${escapeHtml(item.description || "No description")}</span><div class="row-actions" style="justify-content:flex-start;margin-top:12px"><button class="btn btn-ghost" data-edit-tx="${item.id}" type="button">Edit</button><button class="btn btn-ghost" data-delete-tx="${item.id}" type="button">Delete</button></div></article>`;
+        return `<article class="card stat-card"><span class="stat-label">${escapeHtml(item.category)} / ${formatDate(item.date)}</span><strong class="stat-value">${money(item.amount)}</strong><span class="stat-help">${escapeHtml(item.merchant)} / ${escapeHtml(item.paymentMode || "-")} / ${escapeHtml(item.description || "No description")}</span><div class="row-actions" style="justify-content:flex-start;margin-top:12px"><button class="btn btn-ghost" data-edit-tx="${item.id}" type="button">Edit</button><button class="btn btn-ghost" data-delete-tx="${item.id}" type="button">Delete</button></div></article>`;
       }
 
       function PlanSummaryCard(report, editable = false) {
@@ -851,10 +895,6 @@
           const value = label === "Salary" ? report.salary : label === "Spent" ? report.totalSpent : report.projectedSavings;
           return `<div class="bar-row"><strong>${label}</strong><div class="track"><div class="fill" style="width:${Math.min(Math.abs(value) / max * 100, 100)}%;background:${value < 0 ? "var(--danger)" : "var(--accent)"}"></div></div><span class="muted">${money(value)}</span></div>`;
         }).join("");
-      }
-
-      function SkeletonCard() {
-        return `<div class="card stat-card" aria-hidden="true"><span class="stat-label">Loading</span><strong class="stat-value">...</strong></div>`;
       }
 
       function EditPlanDrawer() {
@@ -1165,14 +1205,15 @@
 
       function buildInsights(report) {
         const insights = [];
-        if (report.budgetUsedPercent > report.monthProgressPercent + 15) insights.push({ title: "Budget pace warning", text: "You are spending faster than the month is passing." });
-        if (report.safeToSpendPerDay > 0) insights.push({ title: "Safe daily spend", text: `You can spend ${money(report.safeToSpendPerDay)} per day and stay within budget.` });
-        report.categoryStats.filter((item) => item.usage >= 100).slice(0, 1).forEach((item) => insights.push({ title: `${item.name} is over budget`, text: `${item.name} is over budget by ${money(Math.abs(item.remaining))}.` }));
-        report.categoryStats.filter((item) => item.usage >= 90 && item.usage < 100).slice(0, 1).forEach((item) => insights.push({ title: `${item.name} is almost exhausted`, text: `${item.name} is ${Math.round(item.usage)}% used. Slow down for the rest of the month.` }));
-        if (report.actualSavings > report.plannedSavings) insights.push({ title: "Savings ahead of plan", text: "You are saving more than planned this month." });
+        if (report.budgetUsedPercent > report.monthProgressPercent + 15) insights.push({ icon: "!", status: "Watch", title: "Budget pace warning", text: "You are spending faster than the month is passing." });
+        if (report.safeToSpendPerDay > 0) insights.push({ icon: "₹", status: "Healthy", title: "Safe daily spend", text: `You can spend ${money(report.safeToSpendPerDay)} per day and stay within budget.` });
+        report.categoryStats.filter((item) => item.usage >= 100).slice(0, 1).forEach((item) => insights.push({ icon: "!", status: "Overspent", title: `${item.name} is over budget`, text: `${item.name} is over budget by ${money(Math.abs(item.remaining))}.` }));
+        report.categoryStats.filter((item) => item.usage >= 90 && item.usage < 100).slice(0, 1).forEach((item) => insights.push({ icon: "!", status: "Critical", title: `${item.name} is almost exhausted`, text: `${item.name} is ${Math.round(item.usage)}% used. Slow down for the rest of the month.` }));
+        report.categoryStats.filter((item) => item.usage >= 70 && item.usage < 90).slice(0, 1).forEach((item) => insights.push({ icon: "i", status: "Watch", title: `${item.name} needs attention`, text: `${item.name} is ${Math.round(item.usage)}% used. Keep it slower for the rest of the month.` }));
+        if (report.actualSavings > report.plannedSavings) insights.push({ icon: "+", status: "Healthy", title: "Savings ahead of plan", text: "You are saving more than planned this month." });
         const recurring = recurringExpenses(report);
-        if (recurring.length) insights.push({ title: "Recurring spend detected", text: `You have ${money(recurring.reduce((sum, item) => sum + item.amount, 0))} in recurring monthly expenses.` });
-        if (!insights.length) insights.push({ title: "Stable month", text: "Your spending is currently balanced against your plan." });
+        if (recurring.length) insights.push({ icon: "R", status: "Healthy", title: "Recurring spend detected", text: `You have ${money(recurring.reduce((sum, item) => sum + item.amount, 0))} in recurring monthly expenses.` });
+        if (!insights.length) insights.push({ icon: "✓", status: "Healthy", title: "Stable month", text: "Your spending is currently balanced against your plan." });
         return insights.slice(0, 5);
       }
 
