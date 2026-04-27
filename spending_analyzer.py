@@ -13,13 +13,16 @@ from typing import Any
 
 # Monthly budget limits by category.
 # The keys are category names and the values are allocated monthly amounts.
-monthly_budget: dict[str, float] = {
-    "Housing": 1500.00,
-    "Groceries": 450.00,
-    "Transportation": 250.00,
-    "Entertainment": 180.00,
-    "Utilities": 220.00,
+DEFAULT_MONTHLY_BUDGET: dict[str, float] = {
+    "Housing": 45000.00,
+    "Groceries": 12000.00,
+    "Transportation": 6500.00,
+    "Entertainment": 5000.00,
+    "Utilities": 7000.00,
 }
+
+
+monthly_budget: dict[str, float] = DEFAULT_MONTHLY_BUDGET.copy()
 
 
 # Each expense is stored as a dictionary with Date, Category, Amount, and
@@ -31,31 +34,31 @@ SAMPLE_EXPENSES: list[dict[str, Any]] = [
     {
         "Date": "2026-04-01",
         "Category": "Housing",
-        "Amount": 1500,
+        "Amount": 45000,
         "Description": "Monthly rent",
     },
     {
         "Date": "2026-04-03",
         "Category": "Groceries",
-        "Amount": "125.75",
+        "Amount": "3275.75",
         "Description": "Weekly supermarket run",
     },
     {
         "Date": "2026-04-07",
         "Category": "Transportation",
-        "Amount": 48.50,
+        "Amount": 1850.50,
         "Description": "Fuel refill",
     },
     {
         "Date": "2026-04-12",
         "Category": "Entertainment",
-        "Amount": 210,
+        "Amount": 6200,
         "Description": "Concert tickets",
     },
     {
         "Date": "2026-04-15",
         "Category": "Utilities",
-        "Amount": 185.25,
+        "Amount": 4825.25,
         "Description": "Electric and water bill",
     },
 ]
@@ -148,6 +151,35 @@ def reset_expenses() -> None:
     expenses.clear()
 
 
+def reset_monthly_budget() -> None:
+    """Restore the default INR monthly budget."""
+    monthly_budget.clear()
+    monthly_budget.update(DEFAULT_MONTHLY_BUDGET)
+
+
+def set_monthly_budget(budget_records: dict[str, float | int | str]) -> list[str]:
+    """Replace the monthly budget with user-defined category limits."""
+    errors = []
+    parsed_budget: dict[str, float] = {}
+
+    for category, limit in budget_records.items():
+        cleaned_category = str(category).strip()
+        if not cleaned_category:
+            errors.append("Budget category names cannot be blank.")
+            continue
+
+        try:
+            parsed_budget[cleaned_category] = parse_amount(limit)
+        except ValueError as error:
+            errors.append(f"{cleaned_category}: {error}")
+
+    if parsed_budget:
+        monthly_budget.clear()
+        monthly_budget.update(parsed_budget)
+
+    return errors
+
+
 def load_expenses(expense_records: list[dict[str, Any]]) -> list[str]:
     """Load expense records and return any validation errors.
 
@@ -204,7 +236,7 @@ def build_report_data() -> dict[str, Any]:
 
 def format_currency(amount: float) -> str:
     """Format a number as a currency string."""
-    return f"${amount:,.2f}"
+    return f"INR {amount:,.2f}"
 
 
 def generate_report() -> None:

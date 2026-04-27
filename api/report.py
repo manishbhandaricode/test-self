@@ -19,7 +19,9 @@ from spending_analyzer import (  # noqa: E402
     SAMPLE_EXPENSES,
     build_report_data,
     load_expenses,
+    reset_monthly_budget,
     reset_expenses,
+    set_monthly_budget,
 )
 
 
@@ -37,6 +39,7 @@ class handler(BaseHTTPRequestHandler):
 
     def do_GET(self) -> None:
         """Return a sample budget report for the static dashboard."""
+        reset_monthly_budget()
         reset_expenses()
 
         # The console functions print validation errors. Capture them here so
@@ -71,14 +74,23 @@ class handler(BaseHTTPRequestHandler):
             self._send_json({"ok": False, "errors": ["Request body must be valid JSON."]}, 400)
             return
 
+        budget_records = payload.get("budget")
+        if budget_records is not None and not isinstance(budget_records, dict):
+            self._send_json({"ok": False, "errors": ["'budget' must be an object."]}, 400)
+            return
+
         expense_records = payload.get("expenses")
         if not isinstance(expense_records, list):
             self._send_json({"ok": False, "errors": ["'expenses' must be a list."]}, 400)
             return
 
         reset_expenses()
+        errors = []
+        if budget_records is not None:
+            errors.extend(set_monthly_budget(budget_records))
+
         with contextlib.redirect_stdout(io.StringIO()):
-            errors = load_expenses(expense_records)
+            errors.extend(load_expenses(expense_records))
 
         status_code = 400 if errors else 200
         self._send_json(

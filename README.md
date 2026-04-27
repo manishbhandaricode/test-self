@@ -1,7 +1,8 @@
 # Spending Analyzer and Budget Tracker
 
-A dependency-free Python budget tracker with a Vercel-ready static dashboard
-and Python serverless API.
+A dependency-free Python budget tracker with a Vercel-ready premium dashboard,
+custom budget categories, real expense entry, INR formatting, browser storage,
+and a Python serverless API.
 
 ## Local Console Usage
 
