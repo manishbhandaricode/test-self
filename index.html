@@ -8,18 +8,18 @@
       :root {
         color-scheme: dark;
         --bg: #070812;
-        --panel: rgba(13, 18, 35, 0.78);
-        --panel-strong: rgba(19, 26, 48, 0.96);
+        --panel: rgba(12, 17, 33, 0.82);
+        --panel-strong: rgba(18, 25, 48, 0.96);
         --line: rgba(255, 255, 255, 0.13);
         --ink: #f8fbff;
         --muted: #aab6cf;
-        --soft: #74809a;
-        --cyan: #17e7ff;
-        --green: #1dff98;
+        --soft: #77839d;
+        --cyan: #16e8ff;
+        --mint: #24ff9a;
         --pink: #ff4fd8;
         --gold: #ffd166;
         --red: #ff4d6d;
-        --shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+        --shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
       }
 
       * {
@@ -34,10 +34,10 @@
           Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
           "Segoe UI", sans-serif;
         background:
-          radial-gradient(circle at 12% 12%, rgba(23, 231, 255, 0.22), transparent 28%),
-          radial-gradient(circle at 88% 6%, rgba(255, 79, 216, 0.22), transparent 24%),
-          radial-gradient(circle at 54% 90%, rgba(29, 255, 152, 0.15), transparent 30%),
-          linear-gradient(135deg, #070812 0%, #10152a 54%, #090a12 100%);
+          radial-gradient(circle at 14% 10%, rgba(22, 232, 255, 0.22), transparent 28%),
+          radial-gradient(circle at 84% 8%, rgba(255, 79, 216, 0.2), transparent 25%),
+          radial-gradient(circle at 50% 94%, rgba(36, 255, 154, 0.14), transparent 34%),
+          linear-gradient(135deg, #070812 0%, #111832 58%, #080914 100%);
         color: var(--ink);
       }
 
@@ -47,122 +47,121 @@
         inset: 0;
         pointer-events: none;
         background-image:
-          linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
-        background-size: 48px 48px;
-        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.8), transparent 76%);
+          linear-gradient(rgba(255, 255, 255, 0.035) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.035) 1px, transparent 1px);
+        background-size: 46px 46px;
+        mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.85), transparent 78%);
       }
 
       main {
-        width: min(1360px, calc(100% - 28px));
+        width: min(1400px, calc(100% - 28px));
         margin: 0 auto;
-        padding: 28px 0 42px;
+        padding: 26px 0 42px;
+      }
+
+      .hero,
+      .metric,
+      .panel,
+      .ticker,
+      .table-wrap {
+        border: 1px solid var(--line);
+        background: var(--panel);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(22px);
       }
 
       header {
         display: grid;
-        grid-template-columns: minmax(0, 1.1fr) auto;
-        gap: 18px;
-        align-items: stretch;
-        margin-bottom: 18px;
-      }
-
-      .hero,
-      .panel,
-      .metric,
-      .ticker {
-        border: 1px solid var(--line);
-        background: var(--panel);
-        box-shadow: var(--shadow);
-        backdrop-filter: blur(20px);
+        grid-template-columns: minmax(0, 1fr) 330px;
+        gap: 16px;
+        margin-bottom: 16px;
       }
 
       .hero {
         position: relative;
         overflow: hidden;
-        border-radius: 22px;
-        padding: 26px;
+        border-radius: 24px;
+        padding: 28px;
       }
 
       .hero::after {
         content: "";
         position: absolute;
-        inset: auto -12% -45% 32%;
-        height: 180px;
-        background: linear-gradient(90deg, transparent, rgba(23, 231, 255, 0.4), transparent);
-        filter: blur(28px);
+        inset: auto -10% -45% 30%;
+        height: 190px;
+        background: linear-gradient(90deg, transparent, rgba(22, 232, 255, 0.45), transparent);
+        filter: blur(30px);
         animation: sweep 5s ease-in-out infinite;
       }
 
       @keyframes sweep {
         0%,
         100% {
-          transform: translateX(-30%) rotate(-4deg);
+          transform: translateX(-32%) rotate(-4deg);
         }
         50% {
-          transform: translateX(25%) rotate(4deg);
+          transform: translateX(24%) rotate(4deg);
         }
       }
 
       .eyebrow {
         margin: 0 0 12px;
-        color: var(--green);
-        font-size: 0.8rem;
-        font-weight: 800;
+        color: var(--mint);
+        font-size: 0.78rem;
+        font-weight: 900;
         letter-spacing: 0;
         text-transform: uppercase;
       }
 
       h1 {
-        max-width: 840px;
+        max-width: 880px;
         margin: 0;
-        font-size: clamp(2.6rem, 7vw, 6.6rem);
+        font-size: clamp(2.7rem, 7vw, 6.4rem);
         line-height: 0.92;
         letter-spacing: 0;
       }
 
       .subtitle {
-        max-width: 760px;
+        max-width: 820px;
         margin: 18px 0 0;
         color: var(--muted);
-        font-size: 1.06rem;
+        font-size: 1.05rem;
       }
 
       .ticker {
         display: grid;
         align-content: space-between;
-        min-width: 260px;
-        border-radius: 22px;
-        padding: 20px;
+        border-radius: 24px;
+        padding: 22px;
       }
 
-      .ticker span {
+      .ticker span,
+      .metric span,
+      label {
         color: var(--muted);
-        font-size: 0.86rem;
+        font-size: 0.84rem;
+        font-weight: 800;
       }
 
       .ticker strong {
         display: block;
-        margin-top: 8px;
-        font-size: 2.1rem;
+        margin-top: 9px;
+        font-size: 2.3rem;
       }
 
-      .spark {
-        height: 74px;
-        border-radius: 18px;
+      .orbit {
+        height: 112px;
+        border-radius: 22px;
         background:
-          linear-gradient(90deg, transparent 4%, rgba(23, 231, 255, 0.32), transparent 42%),
-          repeating-linear-gradient(
-            90deg,
-            rgba(255, 255, 255, 0.18) 0 2px,
-            transparent 2px 13px
-          );
-        animation: pulse 2.2s ease-in-out infinite;
+          conic-gradient(from 180deg, var(--cyan), var(--pink), var(--mint), var(--cyan)),
+          linear-gradient(135deg, rgba(255, 255, 255, 0.08), transparent);
+        mask-image: radial-gradient(circle, transparent 42%, #000 43%);
+        animation: spin 4.5s linear infinite;
       }
 
-      @keyframes pulse {
-        50% {
-          filter: brightness(1.45);
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
         }
       }
 
@@ -175,32 +174,42 @@
 
       .metric {
         position: relative;
+        min-height: 145px;
         overflow: hidden;
-        min-height: 128px;
-        border-radius: 18px;
+        border-radius: 20px;
         padding: 18px;
+        cursor: pointer;
+        text-align: left;
+        transition:
+          transform 180ms ease,
+          border-color 180ms ease,
+          background 180ms ease;
+      }
+
+      .metric:hover {
+        transform: translateY(-3px);
+        border-color: rgba(22, 232, 255, 0.48);
+        background: rgba(20, 29, 55, 0.9);
+      }
+
+      .metric:focus-visible {
+        outline: 3px solid rgba(22, 232, 255, 0.38);
+        outline-offset: 3px;
       }
 
       .metric::before {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 52%);
         pointer-events: none;
-      }
-
-      .metric span {
-        position: relative;
-        color: var(--muted);
-        display: block;
-        font-size: 0.86rem;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.13), transparent 48%);
       }
 
       .metric strong {
         position: relative;
         display: block;
         margin-top: 10px;
-        font-size: clamp(1.5rem, 2.4vw, 2.15rem);
+        font-size: clamp(1.45rem, 2.2vw, 2.1rem);
         word-break: break-word;
       }
 
@@ -211,9 +220,28 @@
         color: var(--soft);
       }
 
+      .metric input {
+        position: relative;
+        display: none;
+        width: 100%;
+        margin-top: 10px;
+      }
+
+      .metric.editing strong {
+        display: none;
+      }
+
+      .metric.editing input {
+        display: block;
+      }
+
+      .metric.savings {
+        border-color: rgba(36, 255, 154, 0.28);
+      }
+
       .layout {
         display: grid;
-        grid-template-columns: 420px minmax(0, 1fr);
+        grid-template-columns: 430px minmax(0, 1fr);
         gap: 14px;
         align-items: start;
       }
@@ -224,13 +252,13 @@
       }
 
       .panel {
-        border-radius: 18px;
+        border-radius: 20px;
         padding: 18px;
       }
 
       .panel h2 {
         margin: 0 0 14px;
-        font-size: 1.1rem;
+        font-size: 1.08rem;
         letter-spacing: 0;
       }
 
@@ -242,9 +270,6 @@
       label {
         display: grid;
         gap: 7px;
-        color: var(--muted);
-        font-size: 0.84rem;
-        font-weight: 700;
       }
 
       input,
@@ -261,13 +286,13 @@
       }
 
       select option {
-        color: #10131d;
+        color: #121624;
       }
 
       input:focus,
       select:focus {
-        border-color: rgba(23, 231, 255, 0.8);
-        box-shadow: 0 0 0 4px rgba(23, 231, 255, 0.12);
+        border-color: rgba(22, 232, 255, 0.85);
+        box-shadow: 0 0 0 4px rgba(22, 232, 255, 0.12);
       }
 
       .form-grid {
@@ -288,8 +313,8 @@
         border: 0;
         border-radius: 999px;
         padding: 0 18px;
-        color: #051016;
-        background: linear-gradient(135deg, var(--cyan), var(--green));
+        color: #041116;
+        background: linear-gradient(135deg, var(--cyan), var(--mint));
         font: inherit;
         font-weight: 900;
         cursor: pointer;
@@ -307,25 +332,25 @@
         position: relative;
         overflow: hidden;
         box-shadow:
-          0 0 18px rgba(23, 231, 255, 0.55),
-          0 0 44px rgba(29, 255, 152, 0.25);
-        animation: buttonGlow 1.75s ease-in-out infinite;
+          0 0 18px rgba(22, 232, 255, 0.54),
+          0 0 48px rgba(36, 255, 154, 0.24);
+        animation: buttonGlow 1.8s ease-in-out infinite;
       }
 
       .glow-button::after {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.7), transparent 44%);
+        background: linear-gradient(110deg, transparent 20%, rgba(255, 255, 255, 0.74), transparent 44%);
         transform: translateX(-120%);
-        animation: shine 2.4s ease-in-out infinite;
+        animation: shine 2.5s ease-in-out infinite;
       }
 
       @keyframes buttonGlow {
         50% {
           box-shadow:
-            0 0 28px rgba(255, 79, 216, 0.65),
-            0 0 62px rgba(23, 231, 255, 0.32);
+            0 0 28px rgba(255, 79, 216, 0.62),
+            0 0 68px rgba(22, 232, 255, 0.34);
         }
       }
 
@@ -345,6 +370,12 @@
       .danger-button {
         color: #fff;
         background: linear-gradient(135deg, #ff4d6d, #ff9f1c);
+      }
+
+      .mini-button {
+        min-height: 34px;
+        padding: 0 11px;
+        font-size: 0.78rem;
       }
 
       .category-list,
@@ -372,22 +403,42 @@
         white-space: nowrap;
       }
 
-      .mini-button {
-        min-height: 34px;
-        padding: 0 11px;
+      .insight-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .insight {
+        min-height: 86px;
+        border: 1px solid var(--line);
+        border-radius: 16px;
+        padding: 12px;
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .insight span {
+        display: block;
+        color: var(--muted);
         font-size: 0.78rem;
+        font-weight: 800;
+      }
+
+      .insight strong {
+        display: block;
+        margin-top: 8px;
+        font-size: 1.2rem;
       }
 
       .table-wrap {
         overflow-x: auto;
-        border: 1px solid var(--line);
-        border-radius: 18px;
+        border-radius: 20px;
         background: var(--panel-strong);
       }
 
       table {
         width: 100%;
-        min-width: 760px;
+        min-width: 780px;
         border-collapse: collapse;
       }
 
@@ -425,7 +476,7 @@
       .progress-fill {
         height: 100%;
         border-radius: inherit;
-        background: linear-gradient(90deg, var(--green), var(--cyan));
+        background: linear-gradient(90deg, var(--mint), var(--cyan));
       }
 
       .progress-fill.over {
@@ -433,7 +484,7 @@
       }
 
       .ok {
-        color: var(--green);
+        color: var(--mint);
         font-weight: 900;
       }
 
@@ -474,7 +525,7 @@
         font-weight: 800;
       }
 
-      @media (max-width: 1100px) {
+      @media (max-width: 1120px) {
         header,
         .layout {
           grid-template-columns: 1fr;
@@ -485,26 +536,28 @@
         }
       }
 
-      @media (max-width: 680px) {
+      @media (max-width: 700px) {
         main {
-          width: min(100% - 20px, 1360px);
+          width: min(100% - 20px, 1400px);
           padding-top: 10px;
         }
 
         .hero,
         .ticker,
         .panel,
-        .metric {
+        .metric,
+        .table-wrap {
           border-radius: 14px;
         }
 
         .summary-grid,
-        .form-grid {
+        .form-grid,
+        .insight-grid {
           grid-template-columns: 1fr;
         }
 
         h1 {
-          font-size: clamp(2.3rem, 15vw, 4rem);
+          font-size: clamp(2.4rem, 15vw, 4rem);
         }
       }
     </style>
@@ -513,46 +566,71 @@
     <main>
       <header>
         <section class="hero">
-          <p class="eyebrow">INR Budget Studio</p>
+          <p class="eyebrow">INR Salary and Budget Studio</p>
           <h1>Rupee Command Center</h1>
           <p class="subtitle">
-            Build your own budget categories, record real spending, and watch the whole month light up in rupees.
+            Set your monthly salary, decide how much you want to spend, enter real expenses, and keep savings visible at all times.
           </p>
         </section>
         <aside class="ticker">
           <div>
-            <span>Budget pressure</span>
-            <strong id="pressure-score">0%</strong>
+            <span>Savings rate</span>
+            <strong id="savings-rate">0%</strong>
           </div>
-          <div class="spark" aria-hidden="true"></div>
+          <div class="orbit" aria-hidden="true"></div>
         </aside>
       </header>
 
       <section class="summary-grid" aria-label="Budget summary">
-        <div class="metric">
-          <span>Total Budget</span>
-          <strong id="total-budget">INR 0.00</strong>
-          <small>Editable limits</small>
+        <div class="metric editable-metric" role="button" tabindex="0" data-edit-metric="salary">
+          <span>Monthly Salary</span>
+          <strong id="monthly-salary">INR 0.00</strong>
+          <input id="salary-input" type="number" min="0" step="0.01" />
+          <small>Click to edit income</small>
         </div>
-        <div class="metric">
+        <div class="metric editable-metric" role="button" tabindex="0" data-edit-metric="plannedBudget">
+          <span>Budget Decided To Spend</span>
+          <strong id="planned-budget">INR 0.00</strong>
+          <input id="planned-budget-input" type="number" min="0" step="0.01" />
+          <small>Click to edit target</small>
+        </div>
+        <div class="metric editable-metric" role="button" tabindex="0" data-edit-metric="spent">
           <span>Total Spent</span>
           <strong id="total-spent">INR 0.00</strong>
-          <small>From your entries</small>
+          <input id="spent-input" type="number" min="0" step="0.01" />
+          <small>Click to reconcile spending</small>
         </div>
-        <div class="metric">
-          <span>Remaining</span>
-          <strong id="total-remaining">INR 0.00</strong>
-          <small>Live balance</small>
-        </div>
-        <div class="metric">
-          <span>Categories</span>
-          <strong id="category-count">0</strong>
-          <small>Fully custom</small>
+        <div class="metric savings">
+          <span>Savings</span>
+          <strong id="savings">INR 0.00</strong>
+          <small>Salary minus total spent</small>
         </div>
       </section>
 
       <section class="layout">
         <div class="stack">
+          <section class="panel">
+            <h2>Monthly Plan</h2>
+            <form id="plan-form">
+              <div class="form-grid">
+                <label>
+                  Salary per month
+                  <input id="salary-field" type="number" min="0" step="0.01" placeholder="85000" required />
+                </label>
+                <label>
+                  Budget decided to spend
+                  <input id="planned-budget-field" type="number" min="0" step="0.01" placeholder="55000" required />
+                </label>
+              </div>
+              <div class="actions">
+                <button class="glow-button" type="submit">Update Plan</button>
+                <button class="ghost" id="load-demo" type="button">Load Demo</button>
+                <button class="danger-button" id="reset-all" type="button">Reset</button>
+              </div>
+              <div class="notice" id="plan-notice"></div>
+            </form>
+          </section>
+
           <section class="panel">
             <h2>Add Budget Category</h2>
             <form id="budget-form">
@@ -562,15 +640,11 @@
                   <input id="category-name" placeholder="Food, Rent, Gym..." required />
                 </label>
                 <label>
-                  Monthly limit
+                  Category limit
                   <input id="category-limit" type="number" min="1" step="0.01" placeholder="15000" required />
                 </label>
               </div>
-              <div class="actions">
-                <button class="glow-button" type="submit">Save Category</button>
-                <button class="ghost" id="load-demo" type="button">Load Demo</button>
-                <button class="danger-button" id="reset-all" type="button">Reset</button>
-              </div>
+              <button class="glow-button" type="submit">Save Category</button>
               <div class="notice" id="budget-notice"></div>
             </form>
           </section>
@@ -595,7 +669,7 @@
                 </label>
                 <label>
                   Description
-                  <input id="expense-description" placeholder="Swiggy, Metro card, movie..." required />
+                  <input id="expense-description" placeholder="Swiggy, metro card, movie..." required />
                 </label>
               </div>
               <button class="glow-button" type="submit">Add Spending</button>
@@ -610,12 +684,30 @@
         </div>
 
         <div class="stack">
+          <section class="panel">
+            <h2>Money Pulse</h2>
+            <div class="insight-grid">
+              <div class="insight">
+                <span>Budget left</span>
+                <strong id="budget-left">INR 0.00</strong>
+              </div>
+              <div class="insight">
+                <span>Unallocated plan</span>
+                <strong id="unallocated-budget">INR 0.00</strong>
+              </div>
+              <div class="insight">
+                <span>Planned savings</span>
+                <strong id="planned-savings">INR 0.00</strong>
+              </div>
+            </div>
+          </section>
+
           <section class="table-wrap" aria-label="Category budget report">
             <table>
               <thead>
                 <tr>
                   <th>Spending Name</th>
-                  <th>Budget</th>
+                  <th>Limit</th>
                   <th>Spent</th>
                   <th>Remaining</th>
                   <th>Heat</th>
@@ -635,7 +727,8 @@
     </main>
 
     <script>
-      const storageKey = "rupee-command-center-v2";
+      const storageKey = "rupee-command-center-v3";
+      const manualCategory = "Manual Spending Adjustment";
       const currency = new Intl.NumberFormat("en-IN", {
         style: "currency",
         currency: "INR",
@@ -643,39 +736,49 @@
       });
 
       const demoState = {
+        salary: 85000,
+        plannedBudget: 56000,
         budget: {
-          Rent: 45000,
+          Rent: 30000,
           Groceries: 12000,
-          Commute: 6500,
-          Movies: 4000,
-          Electricity: 7000,
-          Fitness: 3000,
+          Commute: 5500,
+          Movies: 3500,
+          Electricity: 5000,
         },
         expenses: [
-          { date: "2026-04-01", category: "Rent", amount: 45000, description: "Apartment rent" },
+          { date: "2026-04-01", category: "Rent", amount: 30000, description: "Apartment rent" },
           { date: "2026-04-04", category: "Groceries", amount: 3275, description: "Weekly supermarket" },
           { date: "2026-04-08", category: "Commute", amount: 1850, description: "Metro pass and fuel" },
-          { date: "2026-04-12", category: "Movies", amount: 5200, description: "Premium seats and snacks" },
+          { date: "2026-04-12", category: "Movies", amount: 4200, description: "Premium seats and snacks" },
           { date: "2026-04-16", category: "Electricity", amount: 4825, description: "Monthly utility bill" },
         ],
       };
 
       let state = loadState();
 
+      function clone(value) {
+        return JSON.parse(JSON.stringify(value));
+      }
+
       function loadState() {
         const saved = localStorage.getItem(storageKey);
         if (!saved) {
-          return structuredClone(demoState);
+          return clone(demoState);
         }
 
         try {
           const parsed = JSON.parse(saved);
           if (!parsed.budget || !Array.isArray(parsed.expenses)) {
-            return structuredClone(demoState);
+            return clone(demoState);
           }
-          return parsed;
+          return {
+            salary: Number(parsed.salary) || 0,
+            plannedBudget: Number(parsed.plannedBudget) || sumBudget(parsed.budget),
+            budget: parsed.budget,
+            expenses: parsed.expenses,
+          };
         } catch {
-          return structuredClone(demoState);
+          return clone(demoState);
         }
       }
 
@@ -687,10 +790,22 @@
         return currency.format(Number(value) || 0);
       }
 
-      function numberFromInput(id) {
+      function today() {
+        return new Date().toISOString().slice(0, 10);
+      }
+
+      function sumBudget(budget) {
+        return Object.values(budget).reduce((sum, amount) => sum + Number(amount || 0), 0);
+      }
+
+      function totalSpent() {
+        return state.expenses.reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
+      }
+
+      function numberFromInput(id, allowZero = false) {
         const value = Number(document.getElementById(id).value);
-        if (!Number.isFinite(value) || value <= 0) {
-          throw new Error("Enter a valid amount above zero.");
+        if (!Number.isFinite(value) || value < 0 || (!allowZero && value === 0)) {
+          throw new Error(allowZero ? "Enter a valid amount." : "Enter a valid amount above zero.");
         }
         return value;
       }
@@ -709,33 +824,44 @@
         const categories = Object.entries(state.budget).map(([category, budget]) => {
           const spent = state.expenses
             .filter((expense) => expense.category === category)
-            .reduce((sum, expense) => sum + Number(expense.amount), 0);
-          const remaining = budget - spent;
-          const heat = budget > 0 ? Math.min((spent / budget) * 100, 160) : 0;
-          return { category, budget, spent, remaining, heat, overspent: remaining < 0 };
+            .reduce((sum, expense) => sum + Number(expense.amount || 0), 0);
+          const remaining = Number(budget) - spent;
+          const heat = budget > 0 ? Math.min((spent / Number(budget)) * 100, 160) : 0;
+          return { category, budget: Number(budget), spent, remaining, heat, overspent: remaining < 0 };
         });
 
-        const totals = categories.reduce(
-          (acc, item) => {
-            acc.budget += item.budget;
-            acc.spent += item.spent;
-            return acc;
+        const spent = totalSpent();
+        return {
+          categories,
+          totals: {
+            salary: Number(state.salary) || 0,
+            plannedBudget: Number(state.plannedBudget) || 0,
+            categoryBudget: sumBudget(state.budget),
+            spent,
+            savings: (Number(state.salary) || 0) - spent,
+            budgetLeft: (Number(state.plannedBudget) || 0) - spent,
+            plannedSavings: (Number(state.salary) || 0) - (Number(state.plannedBudget) || 0),
           },
-          { budget: 0, spent: 0 },
-        );
-        totals.remaining = totals.budget - totals.spent;
-        return { categories, totals };
+        };
       }
 
       function render() {
         const report = reportData();
-        const pressure = report.totals.budget > 0 ? (report.totals.spent / report.totals.budget) * 100 : 0;
+        const savingsRate =
+          report.totals.salary > 0 ? Math.max((report.totals.savings / report.totals.salary) * 100, 0) : 0;
+        const unallocatedBudget = report.totals.plannedBudget - report.totals.categoryBudget;
 
-        document.getElementById("total-budget").textContent = money(report.totals.budget);
+        document.getElementById("monthly-salary").textContent = money(report.totals.salary);
+        document.getElementById("planned-budget").textContent = money(report.totals.plannedBudget);
         document.getElementById("total-spent").textContent = money(report.totals.spent);
-        document.getElementById("total-remaining").textContent = money(report.totals.remaining);
-        document.getElementById("category-count").textContent = Object.keys(state.budget).length;
-        document.getElementById("pressure-score").textContent = `${Math.round(pressure)}%`;
+        document.getElementById("savings").textContent = money(report.totals.savings);
+        document.getElementById("budget-left").textContent = money(report.totals.budgetLeft);
+        document.getElementById("unallocated-budget").textContent = money(unallocatedBudget);
+        document.getElementById("planned-savings").textContent = money(report.totals.plannedSavings);
+        document.getElementById("savings-rate").textContent = `${Math.round(savingsRate)}%`;
+
+        document.getElementById("salary-field").value = report.totals.salary;
+        document.getElementById("planned-budget-field").value = report.totals.plannedBudget;
 
         renderCategoryOptions();
         renderCategoryList();
@@ -768,7 +894,7 @@
           )
           .join("");
 
-        document.getElementById("category-list").innerHTML = rows || "<p class=\"notice\">Add a category to begin.</p>";
+        document.getElementById("category-list").innerHTML = rows || '<p class="notice">Add a category to begin.</p>';
       }
 
       function renderTable(categories) {
@@ -796,7 +922,7 @@
           .join("");
 
         document.getElementById("report-body").innerHTML =
-          rows || "<tr><td colspan=\"6\">Add a budget category to unlock the dashboard.</td></tr>";
+          rows || '<tr><td colspan="6">Add a budget category to unlock the dashboard.</td></tr>';
       }
 
       function renderExpenses() {
@@ -809,7 +935,7 @@
                   <strong>${escapeHtml(expense.category)}</strong>
                   <strong>${money(expense.amount)}</strong>
                 </div>
-                <p>${escapeHtml(expense.description)} · ${escapeHtml(expense.date)}</p>
+                <p>${escapeHtml(expense.description)} | ${escapeHtml(expense.date)}</p>
                 <button class="mini-button ghost" type="button" data-remove-expense="${state.expenses.length - 1 - index}">
                   Remove
                 </button>
@@ -818,7 +944,7 @@
           )
           .join("");
 
-        document.getElementById("expense-list").innerHTML = rows || "<p class=\"notice\">No spending yet.</p>";
+        document.getElementById("expense-list").innerHTML = rows || '<p class="notice">No spending yet.</p>';
       }
 
       function escapeHtml(value) {
@@ -829,6 +955,114 @@
           .replaceAll('"', "&quot;")
           .replaceAll("'", "&#039;");
       }
+
+      function startMetricEdit(metric) {
+        const card = document.querySelector(`[data-edit-metric="${metric}"]`);
+        const input = card.querySelector("input");
+        const report = reportData();
+        const values = {
+          salary: report.totals.salary,
+          plannedBudget: report.totals.plannedBudget,
+          spent: report.totals.spent,
+        };
+
+        card.classList.add("editing");
+        input.value = values[metric];
+        input.focus();
+        input.select();
+      }
+
+      function finishMetricEdit(metric) {
+        const card = document.querySelector(`[data-edit-metric="${metric}"]`);
+        const input = card.querySelector("input");
+        const value = Number(input.value);
+
+        if (!Number.isFinite(value) || value < 0) {
+          card.classList.remove("editing");
+          render();
+          return;
+        }
+
+        if (metric === "salary") {
+          state.salary = value;
+        }
+
+        if (metric === "plannedBudget") {
+          state.plannedBudget = value;
+        }
+
+        if (metric === "spent") {
+          reconcileTotalSpent(value);
+        }
+
+        card.classList.remove("editing");
+        saveState();
+        render();
+      }
+
+      function reconcileTotalSpent(targetSpent) {
+        const current = totalSpent();
+        const difference = targetSpent - current;
+        if (Math.abs(difference) < 0.01) {
+          return;
+        }
+
+        if (!state.budget[manualCategory]) {
+          state.budget[manualCategory] = Math.max(Math.abs(difference), 1);
+        }
+
+        state.expenses.push({
+          date: today(),
+          category: manualCategory,
+          amount: difference,
+          description: difference > 0 ? "Manual increase to total spent" : "Manual reduction adjustment",
+        });
+      }
+
+      document.querySelectorAll("[data-edit-metric]").forEach((card) => {
+        const metric = card.dataset.editMetric;
+        const input = card.querySelector("input");
+
+        card.addEventListener("click", (event) => {
+          if (event.target === input) {
+            return;
+          }
+          startMetricEdit(metric);
+        });
+
+        card.addEventListener("keydown", (event) => {
+          if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            startMetricEdit(metric);
+          }
+        });
+
+        input.addEventListener("click", (event) => event.stopPropagation());
+        input.addEventListener("blur", () => finishMetricEdit(metric));
+        input.addEventListener("keydown", (event) => {
+          if (event.key === "Enter") {
+            input.blur();
+          }
+          if (event.key === "Escape") {
+            card.classList.remove("editing");
+            render();
+          }
+        });
+      });
+
+      document.getElementById("plan-form").addEventListener("submit", (event) => {
+        event.preventDefault();
+
+        try {
+          state.salary = numberFromInput("salary-field", true);
+          state.plannedBudget = numberFromInput("planned-budget-field", true);
+          saveState();
+          setNotice("plan-notice", "Monthly plan updated.");
+          render();
+        } catch (error) {
+          setNotice("plan-notice", error.message);
+        }
+      });
 
       document.getElementById("budget-form").addEventListener("submit", (event) => {
         event.preventDefault();
@@ -864,7 +1098,7 @@
           });
           saveState();
           event.currentTarget.reset();
-          document.getElementById("expense-date").valueAsDate = new Date();
+          document.getElementById("expense-date").value = today();
           setNotice("expense-notice", "Spending added.");
           render();
         } catch (error) {
@@ -873,17 +1107,17 @@
       });
 
       document.getElementById("load-demo").addEventListener("click", () => {
-        state = structuredClone(demoState);
+        state = clone(demoState);
         saveState();
         render();
-        setNotice("budget-notice", "Demo data restored.");
+        setNotice("plan-notice", "Demo data restored.");
       });
 
       document.getElementById("reset-all").addEventListener("click", () => {
-        state = { budget: {}, expenses: [] };
+        state = { salary: 0, plannedBudget: 0, budget: {}, expenses: [] };
         saveState();
         render();
-        setNotice("budget-notice", "Everything cleared.");
+        setNotice("plan-notice", "Everything cleared.");
       });
 
       document.body.addEventListener("click", (event) => {
@@ -904,7 +1138,7 @@
         }
       });
 
-      document.getElementById("expense-date").valueAsDate = new Date();
+      document.getElementById("expense-date").value = today();
       render();
     </script>
   </body>
