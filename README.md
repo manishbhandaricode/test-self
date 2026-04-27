@@ -1,18 +1,14 @@
-# Spending Analyzer and Budget Tracker
+# RupeeFlow Spending Analyzer
 
-A dependency-free Python budget tracker with a Vercel-ready premium dashboard,
-monthly salary planning, editable spend targets, custom budget categories,
-real expense entry, INR formatting, savings tracking, browser storage, and a
-Python serverless API. The dashboard includes an interactive savings meter that
-changes color as the savings rate improves or drops. It also supports light and
-dark themes with high-contrast brand colors: `#092C95` for light mode and
-`#07BB67` for dark mode. Plan fields preview live before saving, invalid plans
-are blocked, and reset uses a destructive confirmation flow.
+A dependency-free personal finance SaaS-style dashboard for Indian rupee
+budgeting. It tracks monthly salary, Spending Budget, categories, transactions,
+safe-to-spend, savings rate, projected savings, budget burn, and smart insights.
 
-The web dashboard is designed as a personal finance SaaS command center with
-an app shell, empty state onboarding, modals for expenses and categories, smart
-insights, SVG charts, budget health, transaction search/filtering, and a
-destructive reset confirmation flow.
+The web dashboard includes an app shell, desktop sidebar, mobile bottom nav,
+empty state onboarding, edit-plan drawer, expense/category modals, SVG charts,
+budget health, transaction search/filter/sort/export, JSON import/export,
+light/dark themes, toast notifications, undo delete, and destructive reset
+confirmation with `RESET`.
 
 ## Local Console Usage
 
