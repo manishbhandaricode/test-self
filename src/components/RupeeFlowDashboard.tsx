@@ -1,6 +1,7 @@
 "use client";
 
 import { AnimatePresence, motion, useMotionValue, useSpring, useTransform } from "framer-motion";
+import type { ReactNode } from "react";
 import { useEffect, useMemo, useState } from "react";
 import {
   AppState,
@@ -278,7 +279,7 @@ function AppShell({
   setSelectedMonth,
   openExpense,
 }: {
-  children: React.ReactNode;
+  children: ReactNode;
   view: View;
   setView: (view: View) => void;
   theme: Theme;
@@ -782,11 +783,11 @@ function TransactionFilters({ filters, setFilters, categories }: { filters: Filt
   );
 }
 
-function ChartCard({ title, subtitle, children }: { title: string; subtitle: string; children: React.ReactNode }) {
+function ChartCard({ title, subtitle, children }: { title: string; subtitle: string; children: ReactNode }) {
   return <Card title={title} subtitle={subtitle}>{children}</Card>;
 }
 
-function Card({ title, subtitle, children, action }: { title: string; subtitle: string; children: React.ReactNode; action?: React.ReactNode }) {
+function Card({ title, subtitle, children, action }: { title: string; subtitle: string; children: ReactNode; action?: ReactNode }) {
   return (
     <motion.section {...cardMotion} className="rounded-3xl border border-[var(--border)] bg-[var(--card)] p-5 shadow-soft backdrop-blur sm:p-6">
       <div className="mb-5 flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between">
@@ -983,7 +984,7 @@ function ConfirmResetModal({ onClose, onReset }: { onClose: () => void; onReset:
   );
 }
 
-function Modal({ title, subtitle, children, onClose }: { title: string; subtitle: string; children: React.ReactNode; onClose: () => void }) {
+function Modal({ title, subtitle, children, onClose }: { title: string; subtitle: string; children: ReactNode; onClose: () => void }) {
   return (
     <motion.div className="fixed inset-0 z-50 grid place-items-end bg-black/60 p-0 sm:place-items-center sm:p-4" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <motion.section role="dialog" aria-modal="true" aria-labelledby={`${title}-title`} initial={{ opacity: 0, scale: 0.96, y: 20 }} animate={{ opacity: 1, scale: 1, y: 0 }} exit={{ opacity: 0, scale: 0.96, y: 20 }} transition={{ duration: 0.22, ease: [0.16, 1, 0.3, 1] }} className="max-h-[88vh] w-full overflow-auto rounded-t-3xl border border-[var(--border)] bg-[var(--surface)] p-5 shadow-premium sm:max-w-xl sm:rounded-3xl sm:p-6">
@@ -994,7 +995,7 @@ function Modal({ title, subtitle, children, onClose }: { title: string; subtitle
   );
 }
 
-function Drawer({ title, subtitle, children, onClose }: { title: string; subtitle: string; children: React.ReactNode; onClose: () => void }) {
+function Drawer({ title, subtitle, children, onClose }: { title: string; subtitle: string; children: ReactNode; onClose: () => void }) {
   return (
     <motion.div className="fixed inset-0 z-50 bg-black/60" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={(event) => { if (event.target === event.currentTarget) onClose(); }}>
       <motion.aside role="dialog" aria-modal="true" aria-labelledby={`${title}-title`} initial={{ x: "100%" }} animate={{ x: 0 }} exit={{ x: "100%" }} transition={{ duration: 0.24, ease: [0.16, 1, 0.3, 1] }} className="ml-auto h-full w-full max-w-md overflow-auto border-l border-[var(--border)] bg-[var(--surface)] p-5 shadow-premium sm:p-6">
@@ -1040,7 +1041,7 @@ function ThemeToggle({ theme, setTheme }: { theme: Theme; setTheme: (theme: Them
   );
 }
 
-function Button({ children, variant = "primary", type = "button", disabled, onClick }: { children: React.ReactNode; variant?: "primary" | "secondary" | "ghost" | "danger"; type?: "button" | "submit"; disabled?: boolean; onClick?: () => void }) {
+function Button({ children, variant = "primary", type = "button", disabled, onClick }: { children: ReactNode; variant?: "primary" | "secondary" | "ghost" | "danger"; type?: "button" | "submit"; disabled?: boolean; onClick?: () => void }) {
   return (
     <button
       type={type}

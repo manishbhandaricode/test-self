@@ -38,8 +38,9 @@ python spending_analyzer.py
 This project is ready to deploy on Vercel:
 
 - `src/app/page.tsx` serves the Next.js dashboard.
-- `api/report.py` serves the Python serverless function at `/api/report`.
+- `src/app/api/report/route.ts` serves the Node.js route handler at `/api/report`.
 - `package.json` provides the Node.js build scripts Vercel detects.
+- `vercel.json` pins the Vercel framework, install, build, dev, and output settings.
 
 Deploy with:
 
