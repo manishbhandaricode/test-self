@@ -3,7 +3,8 @@
 A dependency-free Python budget tracker with a Vercel-ready premium dashboard,
 monthly salary planning, editable spend targets, custom budget categories,
 real expense entry, INR formatting, savings tracking, browser storage, and a
-Python serverless API.
+Python serverless API. The dashboard includes an interactive savings meter that
+changes color as the savings rate improves or drops.
 
 ## Local Console Usage
 
