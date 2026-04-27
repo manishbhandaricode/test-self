@@ -7,14 +7,20 @@
     <style>
       :root {
         color-scheme: dark;
-        --bg: #06080F;
+        --bg: #050711;
+        --bg-soft: #090D18;
         --surface: #0D111C;
         --surface-elevated: #131A2A;
         --card: rgba(255,255,255,0.055);
+        --card-strong: rgba(255,255,255,0.08);
         --border: rgba(255,255,255,0.10);
+        --border-strong: rgba(255,255,255,0.16);
         --text: #F8FAFC;
+        --text-muted: #94A3B8;
+        --text-soft: #CBD5E1;
         --muted: #94A3B8;
         --accent: #00E6A8;
+        --accent-2: #38BDF8;
         --accent-soft: rgba(0,230,168,0.14);
         --warning: #FBBF24;
         --danger: #FB7185;
@@ -26,14 +32,20 @@
 
       :root[data-theme="light"] {
         color-scheme: light;
-        --bg: #F7FAFC;
+        --bg: #F6F8FB;
+        --bg-soft: #F8FAFC;
         --surface: #FFFFFF;
         --surface-elevated: #F1F5F9;
         --card: #FFFFFF;
+        --card-strong: #F8FAFC;
         --border: #E2E8F0;
+        --border-strong: #CBD5E1;
         --text: #0F172A;
+        --text-muted: #64748B;
+        --text-soft: #334155;
         --muted: #64748B;
         --accent: #00A86B;
+        --accent-2: #0284C7;
         --accent-soft: #E8FFF5;
         --warning: #D97706;
         --danger: #E11D48;
@@ -45,14 +57,23 @@
 
       * { box-sizing: border-box; }
 
+      * {
+        scrollbar-color: color-mix(in srgb, var(--accent), transparent 45%) transparent;
+        scrollbar-width: thin;
+      }
+
+      ::-webkit-scrollbar { width: 10px; height: 10px; }
+      ::-webkit-scrollbar-thumb { background: color-mix(in srgb, var(--accent), transparent 55%); border-radius: 999px; }
+
       body {
         margin: 0;
         min-height: 100vh;
         background:
           radial-gradient(circle at 18% 4%, color-mix(in srgb, var(--accent), transparent 82%), transparent 30%),
-          linear-gradient(135deg, var(--bg), var(--surface));
+          linear-gradient(135deg, var(--bg), var(--bg-soft));
         color: var(--text);
         font-family: Inter, Manrope, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        transition: background 220ms ease, color 220ms ease;
       }
 
       button, input, select { font: inherit; }
@@ -156,6 +177,7 @@
       }
 
       .btn:hover { transform: translateY(-1px); }
+      .btn:active { transform: scale(0.98); }
       .btn-primary { color: var(--button-text); background: var(--accent); box-shadow: 0 16px 40px color-mix(in srgb, var(--accent), transparent 78%); }
       .btn-secondary { color: var(--text); background: var(--surface-elevated); border-color: var(--border); }
       .btn-ghost { color: var(--muted); background: transparent; border-color: var(--border); }
@@ -206,6 +228,15 @@
         backdrop-filter: blur(18px);
         animation: enter 240ms ease both;
       }
+
+      .grid > .card:nth-child(2),
+      .grid > section:nth-child(2) { animation-delay: 40ms; }
+      .grid > .card:nth-child(3),
+      .grid > section:nth-child(3) { animation-delay: 80ms; }
+      .grid > .card:nth-child(4),
+      .grid > section:nth-child(4) { animation-delay: 120ms; }
+      .grid > .card:nth-child(5),
+      .grid > section:nth-child(5) { animation-delay: 160ms; }
 
       .card-header {
         display: flex;
@@ -300,6 +331,18 @@
       .bottom-nav button { min-height: 44px; border: 0; border-radius: 16px; color: var(--muted); background: transparent; font-size: 0.78rem; font-weight: 850; }
       .bottom-nav button.active { color: var(--button-text); background: var(--accent); }
 
+      .sticky-add {
+        position: fixed;
+        right: 18px;
+        bottom: 86px;
+        z-index: 44;
+        display: none;
+        min-width: 56px;
+        min-height: 56px;
+        border-radius: 999px;
+        box-shadow: 0 18px 44px color-mix(in srgb, var(--accent), transparent 72%);
+      }
+
       @keyframes enter { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
       @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
       @keyframes modalIn { to { transform: scale(1); } }
@@ -328,6 +371,11 @@
         table.transactions-table { display: none; }
         .mobile-cards { display: grid; }
         .bottom-nav { display: grid; }
+        .sticky-add { display: inline-flex; align-items: center; justify-content: center; }
+        .drawer { top: auto; bottom: 0; width: 100%; height: min(86vh, 720px); border-left: 0; border-top: 1px solid var(--border); border-radius: 24px 24px 0 0; transform: translateY(100%); }
+        .drawer-backdrop.open .drawer { transform: translateY(0); }
+        .modal-backdrop { align-items: end; padding: 0; }
+        .modal { width: 100%; max-height: 88vh; border-radius: 24px 24px 0 0; }
       }
     </style>
   </head>
@@ -337,6 +385,7 @@
     <div class="drawer-backdrop" id="drawer-root"></div>
     <div class="modal-backdrop" id="modal-root"></div>
     <div class="toast-stack" id="toast-stack" aria-live="polite"></div>
+    <button class="btn btn-primary sticky-add" id="sticky-add" type="button" aria-label="Add Expense">+</button>
 
     <script>
       const STORAGE_KEY = "rupeeflow-state-v2";
@@ -840,6 +889,7 @@
         document.getElementById("theme-toggle")?.addEventListener("click", toggleTheme);
         document.getElementById("month-selector")?.addEventListener("change", (event) => { selectedMonth = event.target.value; localStorage.setItem(MONTH_KEY, selectedMonth); renderPage(); });
         document.getElementById("global-add-expense")?.addEventListener("click", openExpenseModal);
+        document.getElementById("sticky-add")?.addEventListener("click", openExpenseModal);
         document.getElementById("header-settings")?.addEventListener("click", () => setView("Settings"));
       }
 
@@ -865,8 +915,22 @@
 
       function bindFilters() {
         const map = { "filter-search": "search", "filter-category": "category", "filter-from": "from", "filter-to": "to", "filter-min": "min", "filter-max": "max", "filter-sort": "sort" };
-        Object.entries(map).forEach(([idName, key]) => document.getElementById(idName)?.addEventListener("input", (event) => { filters[key] = event.target.value; renderPage(); }));
-        Object.entries(map).forEach(([idName, key]) => document.getElementById(idName)?.addEventListener("change", (event) => { filters[key] = event.target.value; renderPage(); }));
+        Object.entries(map).forEach(([idName, key]) => document.getElementById(idName)?.addEventListener("input", (event) => updateFilter(event, key)));
+        Object.entries(map).forEach(([idName, key]) => document.getElementById(idName)?.addEventListener("change", (event) => updateFilter(event, key)));
+      }
+
+      function updateFilter(event, key) {
+        const activeId = event.target.id;
+        const cursor = event.target.selectionStart;
+        filters[key] = event.target.value;
+        renderPage();
+        requestAnimationFrame(() => {
+          const active = document.getElementById(activeId);
+          if (active) {
+            active.focus();
+            if (typeof cursor === "number" && active.setSelectionRange && ["search", "text", ""].includes(active.type)) active.setSelectionRange(cursor, cursor);
+          }
+        });
       }
 
       function bindRowActions() {
@@ -1032,10 +1096,12 @@
         root.classList.add("open");
         root.querySelectorAll("[data-close-drawer]").forEach((button) => button.addEventListener("click", closeDrawer));
         root.addEventListener("click", closeDrawerBackdrop);
+        root.addEventListener("keydown", handleFocusTrap);
+        trapFocus(root);
       }
 
       function closeDrawerBackdrop(event) { if (event.target.id === "drawer-root") closeDrawer(); }
-      function closeDrawer() { const root = document.getElementById("drawer-root"); root.classList.remove("open"); root.innerHTML = ""; root.removeEventListener("click", closeDrawerBackdrop); }
+      function closeDrawer() { const root = document.getElementById("drawer-root"); root.classList.remove("open"); root.innerHTML = ""; root.removeEventListener("click", closeDrawerBackdrop); root.removeEventListener("keydown", handleFocusTrap); }
 
       function openModal(content) {
         const root = document.getElementById("modal-root");
@@ -1043,18 +1109,35 @@
         root.classList.add("open");
         root.querySelectorAll("[data-close-modal]").forEach((button) => button.addEventListener("click", closeModal));
         root.addEventListener("click", closeModalBackdrop);
+        root.addEventListener("keydown", handleFocusTrap);
       }
 
       function closeModalBackdrop(event) { if (event.target.id === "modal-root") closeModal(); }
-      function closeModal() { const root = document.getElementById("modal-root"); root.classList.remove("open"); root.innerHTML = ""; root.removeEventListener("click", closeModalBackdrop); }
+      function closeModal() { const root = document.getElementById("modal-root"); root.classList.remove("open"); root.innerHTML = ""; root.removeEventListener("click", closeModalBackdrop); root.removeEventListener("keydown", handleFocusTrap); }
 
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") { closeModal(); closeDrawer(); }
       });
 
       function trapFocus(root) {
-        const focusable = root.querySelector("button, input, select");
+        const focusable = root.querySelector("input, select, textarea, button, [tabindex]:not([tabindex='-1'])");
         focusable?.focus();
+      }
+
+      function handleFocusTrap(event) {
+        if (event.key !== "Tab") return;
+        const focusable = [...event.currentTarget.querySelectorAll("button, input, select, textarea, [tabindex]:not([tabindex='-1'])")]
+          .filter((node) => !node.disabled && node.offsetParent !== null);
+        if (!focusable.length) return;
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && document.activeElement === first) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && document.activeElement === last) {
+          event.preventDefault();
+          first.focus();
+        }
       }
 
       function getReport() {
@@ -1194,7 +1277,7 @@
       }
 
       function isEmpty() {
-        return state.salary <= 0 || state.transactions.length === 0;
+        return state.salary <= 0 && state.transactions.length === 0;
       }
 
       function hasUserData() {
