@@ -28,6 +28,7 @@
         --info: #38BDF8;
         --shadow: 0 24px 80px rgba(0, 0, 0, 0.38);
         --button-text: #03140e;
+        --ease-premium: cubic-bezier(0.16, 1, 0.3, 1);
       }
 
       :root[data-theme="light"] {
@@ -181,17 +182,31 @@
       .header-actions { display: flex; align-items: center; gap: 10px; }
 
       .btn {
+        position: relative;
+        overflow: hidden;
         min-height: 42px;
         border: 1px solid transparent;
         border-radius: 12px;
         padding: 0 14px;
         font-weight: 900;
-        transition: transform 140ms ease, background 140ms ease, opacity 140ms ease;
+        transition: transform 140ms var(--ease-premium), background 140ms ease, opacity 140ms ease, box-shadow 140ms ease;
       }
 
-      .btn:hover { transform: translateY(-1px); }
+      .btn::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        opacity: 0;
+        background: linear-gradient(115deg, transparent 18%, rgba(255,255,255,0.22), transparent 58%);
+        transform: translateX(-120%);
+        transition: transform 420ms var(--ease-premium), opacity 160ms ease;
+      }
+
+      .btn:hover { transform: translateY(-2px); }
+      .btn:hover::after { opacity: 1; transform: translateX(120%); }
       .btn:active { transform: scale(0.98); }
       .btn-primary { color: var(--button-text); background: var(--accent); box-shadow: 0 16px 40px color-mix(in srgb, var(--accent), transparent 78%); }
+      .btn-primary:hover { box-shadow: 0 20px 52px color-mix(in srgb, var(--accent), transparent 68%); }
       .btn-secondary { color: var(--text); background: var(--surface-elevated); border-color: var(--border); }
       .btn-ghost { color: var(--muted); background: transparent; border-color: var(--border); }
       .btn-danger { color: #fff; background: var(--danger); }
@@ -239,8 +254,8 @@
         background: var(--card);
         box-shadow: var(--shadow);
         backdrop-filter: blur(18px);
-        animation: enter 240ms ease both;
-        transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 220ms ease;
+        animation: enter 280ms var(--ease-premium) both;
+        transition: transform 160ms var(--ease-premium), border-color 160ms ease, box-shadow 160ms ease, background 220ms ease;
       }
 
       .card:hover { border-color: var(--border-strong); transform: translateY(-1px); }
@@ -267,6 +282,7 @@
       .card-body { padding: 24px; }
 
       .hero-card {
+        position: relative;
         min-height: 370px;
         border-color: var(--border-strong);
         overflow: hidden;
@@ -276,9 +292,30 @@
           linear-gradient(135deg, color-mix(in srgb, var(--surface-elevated), var(--accent) 10%), var(--card));
       }
 
+      .hero-card::after {
+        content: "";
+        position: absolute;
+        inset: -30%;
+        pointer-events: none;
+        opacity: 0.42;
+        background: conic-gradient(from 140deg, transparent, color-mix(in srgb, var(--accent), transparent 76%), transparent 32%);
+        animation: premiumSweep 8s linear infinite;
+      }
+
+      .hero-card::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        opacity: 0.72;
+        background: radial-gradient(circle at var(--mx, 18%) var(--my, 18%), color-mix(in srgb, var(--accent), transparent 72%), transparent 34%);
+        transition: opacity 180ms ease;
+      }
+
+      .hero-card > * { position: relative; z-index: 1; }
       .hero-layout { display: grid; grid-template-columns: minmax(0, 1fr) 320px; gap: 28px; align-items: end; }
       .eyebrow { margin: 0 0 10px; color: var(--accent); font-size: 0.78rem; font-weight: 950; text-transform: uppercase; }
-      .hero-number { margin: 0; font-size: clamp(3rem, 7vw, 5.8rem); line-height: 0.92; letter-spacing: 0; }
+      .hero-number { margin: 0; font-size: clamp(3rem, 7vw, 5.8rem); line-height: 0.92; letter-spacing: 0; text-shadow: 0 18px 60px color-mix(in srgb, var(--accent), transparent 62%); animation: metricLift 520ms var(--ease-premium) both; }
       .hero-copy { max-width: 700px; color: var(--muted); line-height: 1.55; font-size: 1.02rem; }
       .hero-metrics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 22px; }
       .hero-chip { border: 1px solid var(--border); border-radius: 18px; padding: 12px; background: color-mix(in srgb, var(--card-strong), transparent 8%); }
@@ -296,7 +333,9 @@
         color: var(--accent);
         background: var(--accent-soft);
         font-weight: 950;
+        transition: transform 160ms var(--ease-premium), box-shadow 160ms ease;
       }
+      .stat-card:hover .stat-icon, .insight-card:hover .insight-icon { transform: translateY(-2px) scale(1.04); box-shadow: 0 12px 28px color-mix(in srgb, var(--accent), transparent 82%); }
       .mini-stat { min-height: 92px; border: 1px solid var(--border); border-radius: 16px; padding: 14px; background: var(--surface-elevated); }
       .stat-label { color: var(--muted); font-size: 0.76rem; font-weight: 950; text-transform: uppercase; }
       .stat-value { display: block; margin-top: 10px; font-size: clamp(1.22rem, 1.9vw, 1.75rem); font-weight: 800; word-break: break-word; }
@@ -306,8 +345,8 @@
       .meter svg { position: absolute; inset: 12px; width: calc(100% - 24px); height: calc(100% - 12px); overflow: visible; }
       .meter path { fill: none; stroke-linecap: round; stroke-width: 15; }
       .meter-track { stroke: color-mix(in srgb, var(--text), transparent 88%); }
-      .meter-progress { stroke: var(--meter-color); stroke-dasharray: var(--progress) 100; transition: stroke-dasharray 620ms ease; }
-      .meter-needle { position: absolute; left: 50%; bottom: 31px; width: 78px; height: 4px; border-radius: 99px; background: linear-gradient(90deg, transparent, var(--text), var(--meter-color)); transform-origin: 0 50%; transform: rotate(var(--angle)); transition: transform 620ms ease; }
+      .meter-progress { stroke: var(--meter-color); stroke-dasharray: var(--progress) 100; transition: stroke-dasharray 720ms var(--ease-premium); }
+      .meter-needle { position: absolute; left: 50%; bottom: 31px; width: 78px; height: 4px; border-radius: 99px; background: linear-gradient(90deg, transparent, var(--text), var(--meter-color)); transform-origin: 0 50%; transform: rotate(var(--angle)); transition: transform 720ms var(--ease-premium); }
       .meter-label { position: absolute; left: 50%; bottom: 18px; transform: translateX(-50%); text-align: center; }
       .meter-label strong { display: block; font-size: 1.36rem; }
 
@@ -318,9 +357,11 @@
       .insight-card p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 0.92rem; }
 
       .chart { width: 100%; min-height: 240px; }
+      .chart-fill { animation: chartRise 720ms var(--ease-premium) both; transform-origin: bottom; }
+      .chart-line { stroke-dasharray: 120; stroke-dashoffset: 120; animation: drawLine 760ms var(--ease-premium) 120ms forwards; }
       .bar-row { display: grid; grid-template-columns: 128px minmax(0, 1fr) auto; gap: 10px; align-items: center; margin-bottom: 13px; }
       .track { height: 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent), transparent 88%); overflow: hidden; }
-      .fill { height: 100%; border-radius: inherit; background: var(--accent); animation: grow 680ms ease both; transform-origin: left; }
+      .fill { height: 100%; border-radius: inherit; background: var(--accent); animation: grow 720ms var(--ease-premium) both; transform-origin: left; }
 
       table { width: 100%; border-collapse: collapse; }
       th, td { padding: 14px 12px; border-bottom: 1px solid var(--border); text-align: left; vertical-align: middle; }
@@ -342,11 +383,11 @@
 
       .drawer-backdrop, .modal-backdrop { position: fixed; inset: 0; z-index: 50; display: none; background: rgba(0,0,0,0.58); }
       .drawer-backdrop.open, .modal-backdrop.open { display: block; }
-      .drawer { position: fixed; top: 0; right: 0; width: min(460px, 100%); height: 100%; overflow: auto; border-left: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); transform: translateX(100%); transition: transform 200ms ease; }
+      .drawer { position: fixed; top: 0; right: 0; width: min(460px, 100%); height: 100%; overflow: auto; border-left: 1px solid var(--border); background: var(--surface); box-shadow: var(--shadow); transform: translateX(100%); transition: transform 220ms var(--ease-premium); }
       .drawer-backdrop.open .drawer { transform: translateX(0); }
       .modal-backdrop { place-items: center; padding: 16px; }
       .modal-backdrop.open { display: grid; }
-      .modal { width: min(580px, 100%); max-height: calc(100vh - 32px); overflow: auto; transform: scale(0.98); animation: modalIn 190ms ease both; }
+      .modal { width: min(580px, 100%); max-height: calc(100vh - 32px); overflow: auto; transform: scale(0.96) translateY(8px); animation: modalIn 210ms var(--ease-premium) both; }
 
       form { display: grid; gap: 14px; }
       .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
@@ -358,7 +399,7 @@
       .chip { min-height: 34px; border: 1px solid var(--border); border-radius: 999px; padding: 0 11px; color: var(--text); background: var(--surface-elevated); font-weight: 850; }
 
       .toast-stack { position: fixed; right: 18px; bottom: 18px; z-index: 70; display: grid; gap: 10px; }
-      .toast { display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; color: var(--text); background: var(--surface-elevated); box-shadow: var(--shadow); animation: toastIn 200ms ease both; }
+      .toast { display: flex; align-items: center; gap: 12px; border: 1px solid var(--border); border-radius: 14px; padding: 12px 14px; color: var(--text); background: var(--surface-elevated); box-shadow: var(--shadow); animation: toastIn 220ms var(--ease-premium) both; }
       .toast button { min-height: 30px; }
 
       .bottom-nav { display: none; position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 45; grid-template-columns: repeat(5, 1fr); gap: 6px; border: 1px solid var(--border); border-radius: 22px; padding: 8px; background: color-mix(in srgb, var(--surface), transparent 4%); box-shadow: var(--shadow); }
@@ -378,10 +419,14 @@
         box-shadow: 0 18px 44px color-mix(in srgb, var(--accent), transparent 72%);
       }
 
-      @keyframes enter { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes enter { from { opacity: 0; transform: translateY(12px) scale(0.985); } to { opacity: 1; transform: translateY(0) scale(1); } }
       @keyframes grow { from { transform: scaleX(0); } to { transform: scaleX(1); } }
-      @keyframes modalIn { to { transform: scale(1); } }
-      @keyframes toastIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+      @keyframes modalIn { to { opacity: 1; transform: scale(1) translateY(0); } }
+      @keyframes toastIn { from { opacity: 0; transform: translateY(12px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+      @keyframes premiumSweep { to { transform: rotate(360deg); } }
+      @keyframes metricLift { from { opacity: 0; transform: translateY(10px); filter: blur(4px); } to { opacity: 1; transform: translateY(0); filter: blur(0); } }
+      @keyframes chartRise { from { opacity: 0; transform: scaleY(0.82); } to { opacity: 1; transform: scaleY(1); } }
+      @keyframes drawLine { to { stroke-dashoffset: 0; } }
 
       @media (prefers-reduced-motion: reduce) {
         * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
@@ -598,6 +643,7 @@
         if (isEmpty() && currentView === "Overview") {
           root.innerHTML = EmptyState();
           bindPage();
+          runMotion();
           return;
         }
         const pages = {
@@ -610,6 +656,7 @@
         };
         root.innerHTML = pages[currentView] || pages.Overview;
         bindPage();
+        runMotion();
       }
 
       function OverviewPage(report) {
@@ -715,7 +762,7 @@
             <div class="card-body hero-layout">
               <div>
                 <p class="eyebrow">Safe to Spend</p>
-                <h2 class="hero-number">${money(report.budgetLeft)}</h2>
+                <h2 class="hero-number" data-count-value="${report.budgetLeft}">${money(report.budgetLeft)}</h2>
                 <p class="hero-copy">${report.budgetLeft < 0 ? `You are over budget by ${money(Math.abs(report.budgetLeft))}. Review critical categories before spending more.` : `${money(report.safeToSpendPerDay)}/day available for the rest of the month. ${healthCopy(report.healthStatus)}`}</p>
                 <div class="hero-metrics">
                   ${HeroChip("Month progress", `${Math.round(report.monthProgressPercent)}%`)}
@@ -790,7 +837,7 @@
         if (!points.length) return `<p class="muted">Add expenses to see a spending trend.</p>`;
         const max = Math.max(...points.map((point) => point.amount), 1);
         const coords = points.map((point, index) => `${points.length === 1 ? 50 : (index / (points.length - 1)) * 100},${100 - (point.amount / max) * 78}`).join(" ");
-        return `<svg class="chart" viewBox="0 0 100 112" preserveAspectRatio="none" role="img" aria-label="Spending trend chart"><polygon points="${coords} 100,104 0,104" fill="color-mix(in srgb, var(--accent), transparent 84%)"></polygon><polyline points="${coords}" fill="none" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></polyline><polyline points="0,104 100,104" fill="none" stroke="var(--border)" stroke-width="0.8"></polyline></svg>`;
+        return `<svg class="chart" viewBox="0 0 100 112" preserveAspectRatio="none" role="img" aria-label="Spending trend chart"><polygon class="chart-fill" points="${coords} 100,104 0,104" fill="color-mix(in srgb, var(--accent), transparent 84%)"></polygon><polyline class="chart-line" points="${coords}" pathLength="120" fill="none" stroke="var(--accent)" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round"></polyline><polyline points="0,104 100,104" fill="none" stroke="var(--border)" stroke-width="0.8"></polyline></svg>`;
       }
 
       function CategoryBreakdownChart(report) {
@@ -1150,10 +1197,44 @@
         root.querySelectorAll("[data-close-modal]").forEach((button) => button.addEventListener("click", closeModal));
         root.addEventListener("click", closeModalBackdrop);
         root.addEventListener("keydown", handleFocusTrap);
+        trapFocus(root);
       }
 
       function closeModalBackdrop(event) { if (event.target.id === "modal-root") closeModal(); }
       function closeModal() { const root = document.getElementById("modal-root"); root.classList.remove("open"); root.innerHTML = ""; root.removeEventListener("click", closeModalBackdrop); root.removeEventListener("keydown", handleFocusTrap); }
+
+      function runMotion() {
+        if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+        const root = document.getElementById("page-root");
+        if (!root) return;
+        root.querySelectorAll(".card").forEach((card, index) => {
+          card.style.animationDelay = `${Math.min(index * 38, 260)}ms`;
+        });
+        root.querySelectorAll(".hero-card").forEach((card) => {
+          card.addEventListener("pointermove", (event) => {
+            const rect = card.getBoundingClientRect();
+            card.style.setProperty("--mx", `${((event.clientX - rect.left) / rect.width) * 100}%`);
+            card.style.setProperty("--my", `${((event.clientY - rect.top) / rect.height) * 100}%`);
+          }, { passive: true });
+        });
+        animateCountUps(root);
+      }
+
+      function animateCountUps(root) {
+        root.querySelectorAll("[data-count-value]").forEach((element) => {
+          const target = Number(element.dataset.countValue || 0);
+          const start = target > 0 ? Math.max(target * 0.86, 0) : Math.min(target * 0.86, 0);
+          const duration = 720;
+          const started = performance.now();
+          const tick = (now) => {
+            const progress = clamp((now - started) / duration, 0, 1);
+            const eased = 1 - Math.pow(1 - progress, 3);
+            element.textContent = money(start + (target - start) * eased);
+            if (progress < 1) requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+        });
+      }
 
       document.addEventListener("keydown", (event) => {
         if (event.key === "Escape") { closeModal(); closeDrawer(); }
