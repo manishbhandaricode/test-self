@@ -6,7 +6,8 @@ real expense entry, INR formatting, savings tracking, browser storage, and a
 Python serverless API. The dashboard includes an interactive savings meter that
 changes color as the savings rate improves or drops. It also supports light and
 dark themes with high-contrast brand colors: `#092C95` for light mode and
-`#07BB67` for dark mode.
+`#07BB67` for dark mode. Plan fields preview live before saving, invalid plans
+are blocked, and reset/demo actions require a confirmation code.
 
 ## Local Console Usage
 
