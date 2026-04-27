@@ -1,14 +1,29 @@
 # RupeeFlow Spending Analyzer
 
-A dependency-free personal finance SaaS-style dashboard for Indian rupee
-budgeting. It tracks monthly salary, Spending Budget, categories, transactions,
-safe-to-spend, savings rate, projected savings, budget burn, and smart insights.
+A premium Next.js, React, Tailwind CSS, and Node.js personal finance dashboard
+for Indian rupee budgeting. It tracks monthly salary, spending budget, category
+limits, real expenses, safe-to-spend, savings rate, projected savings, budget
+burn, budget health, and smart insights.
 
-The web dashboard includes an app shell, desktop sidebar, mobile bottom nav,
-empty state onboarding, edit-plan drawer, expense/category modals, SVG charts,
-budget health, transaction search/filter/sort/export, JSON import/export,
-light/dark themes, toast notifications, undo delete, and destructive reset
-confirmation with `RESET`.
+The app uses the Next.js App Router, TypeScript, Framer Motion interactions,
+Tailwind CSS, localStorage persistence, responsive desktop/mobile navigation,
+modal and drawer workflows, SVG charts, transaction filtering/export, theme
+persistence, and destructive reset confirmation with `RESET`.
+
+## Local Web Usage
+
+Install dependencies and run the Next.js development server:
+
+```bash
+npm install
+npm run dev
+```
+
+Build for production:
+
+```bash
+npm run build
+```
 
 ## Local Console Usage
 
@@ -22,9 +37,9 @@ python spending_analyzer.py
 
 This project is ready to deploy on Vercel:
 
-- `index.html` serves the browser dashboard.
+- `src/app/page.tsx` serves the Next.js dashboard.
 - `api/report.py` serves the Python serverless function at `/api/report`.
-- `vercel.json` marks the project as a Vercel project configuration.
+- `package.json` provides the Node.js build scripts Vercel detects.
 
 Deploy with:
 

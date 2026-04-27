@@ -1,0 +1,108 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+  --bg: #050711;
+  --bg-soft: #090D18;
+  --surface: #0E1424;
+  --surface-elevated: #141B2D;
+  --card: rgba(255,255,255,0.055);
+  --card-strong: rgba(255,255,255,0.08);
+  --border: rgba(255,255,255,0.10);
+  --border-strong: rgba(255,255,255,0.16);
+  --text: #F8FAFC;
+  --text-muted: #94A3B8;
+  --text-soft: #CBD5E1;
+  --accent: #00E6A8;
+  --accent-2: #38BDF8;
+  --accent-soft: rgba(0,230,168,0.14);
+  --success: #34D399;
+  --warning: #FBBF24;
+  --danger: #FB7185;
+  --info: #38BDF8;
+}
+
+:root[data-theme="light"] {
+  color-scheme: light;
+  --bg: #F6F8FB;
+  --bg-soft: #F8FAFC;
+  --surface: #FFFFFF;
+  --surface-elevated: #FFFFFF;
+  --card: #FFFFFF;
+  --card-strong: #F8FAFC;
+  --border: #E2E8F0;
+  --border-strong: #CBD5E1;
+  --text: #0F172A;
+  --text-muted: #64748B;
+  --text-soft: #334155;
+  --accent: #00A86B;
+  --accent-2: #0284C7;
+  --accent-soft: #E8FFF5;
+  --success: #059669;
+  --warning: #D97706;
+  --danger: #E11D48;
+  --info: #0284C7;
+}
+
+* {
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in srgb, var(--accent), transparent 45%) transparent;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+  background:
+    radial-gradient(circle at 16% 0%, color-mix(in srgb, var(--accent), transparent 82%), transparent 28%),
+    radial-gradient(circle at 92% 12%, color-mix(in srgb, var(--accent-2), transparent 86%), transparent 26%),
+    linear-gradient(135deg, var(--bg), var(--bg-soft));
+  color: var(--text);
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  text-rendering: optimizeLegibility;
+  transition: background 240ms ease, color 240ms ease;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255,255,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255,255,255,0.022) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: radial-gradient(circle at 22% 8%, black, transparent 58%);
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid color-mix(in srgb, var(--accent), transparent 65%);
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
