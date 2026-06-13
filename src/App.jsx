@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import AirplaneSwitch from './AirplaneSwitch';
-import NightSky from './NightSky';
-import Scenery from './Scenery'; 
-import GroundRocket from './GroundRocket'; 
+import NightSky3D from './NightSky3D'; // Use the new 3D engine
 import './App.css';
 
 function App() {
@@ -16,8 +14,8 @@ function App() {
   return (
     <div className="app-container dark-mode">
       
-      {/* Night Sky acts as the deep background */}
-      <NightSky isActive={stage === 'night'} />
+      {/* 3D Night Sky acts as the deep background */}
+      <NightSky3D isActive={stage === 'night'} />
       
       {/* The centered premium switch, which hides after flipping */}
       <AnimatePresence>
