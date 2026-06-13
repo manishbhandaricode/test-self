@@ -1,16 +1,18 @@
 .night-sky-container {
   position: fixed;
   inset: 0;
-  background-color: #010204; /* Pitch black */
+  background: radial-gradient(ellipse at 50% 15%, #0a0e1a 0%, #050810 30%, #020408 60%, #010204 100%);
   z-index: 10;
   overflow: hidden;
 }
 
-canvas {
+/* All compositing layers share this base */
+.layer {
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100vw !important;
-  height: 100vh !important;
-  outline: none;
+  inset: 0;
+  pointer-events: none;
+}
+
+.rocket-layer {
+  pointer-events: none;
 }

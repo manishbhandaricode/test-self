@@ -1,7 +1,5 @@
 .burst-container {
   position: absolute;
-  top: 30%; /* Explodes high in the sky */
-  left: 50%;
   transform: translate(-50%, -50%);
   width: 2px;
   height: 2px;
@@ -11,13 +9,29 @@
 
 .core-flash {
   position: absolute;
-  top: -25px;
-  left: -25px;
-  width: 50px;
-  height: 50px;
-  background: radial-gradient(circle, #ffffff 0%, rgba(255, 255, 255, 0.8) 20%, transparent 70%);
+  top: -30px;
+  left: -30px;
+  width: 60px;
+  height: 60px;
+  background: radial-gradient(
+    circle, 
+    #ffffff 0%, 
+    rgba(255, 255, 255, 0.9) 15%, 
+    rgba(255, 230, 200, 0.5) 40%, 
+    transparent 70%
+  );
   border-radius: 50%;
-  filter: blur(2px);
+  filter: blur(3px);
+  mix-blend-mode: screen;
+}
+
+.ring-glow {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
   mix-blend-mode: screen;
 }
 
@@ -28,4 +42,25 @@
   border-radius: 50%;
   will-change: transform, opacity;
   mix-blend-mode: screen;
+}
+
+/* Outer sparks get a subtle elongated trail effect */
+.burst-spark.outer {
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+/* Inner sparks are crisp and bright */
+.burst-spark.inner {
+  filter: blur(0.3px);
+}
+
+/* Glitter particles twinkle */
+.burst-spark.glitter {
+  animation: twinkle 0.3s ease-in-out infinite alternate;
+}
+
+@keyframes twinkle {
+  from { opacity: 0.6; }
+  to { opacity: 1; }
 }

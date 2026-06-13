@@ -1,3 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  overflow: hidden;
+  background: #010204;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .app-container {
   min-height: 100vh;
   width: 100vw;
@@ -6,8 +22,7 @@
   align-items: center;
   position: relative;
   overflow: hidden;
-  background-color: #010101; /* Pitch black start */
-  transition: background-color 2s ease-in-out;
+  background-color: #010204;
 }
 
 .switch-wrapper {
@@ -18,5 +33,5 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  z-index: 50; /* Ensure the switch is above everything initially */
+  z-index: 50;
 }

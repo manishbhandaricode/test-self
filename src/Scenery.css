@@ -1,20 +1,42 @@
+/* ═══════════════════════════════════════════════════════════
+   SCENERY — Cinematic Night-Time Landscape
+   Pure SVG + CSS — Zero images
+   ═══════════════════════════════════════════════════════════ */
+
+/* ── Container ── */
 .scenery-container {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 40vh; /* Takes up bottom 40% of the screen */
-  z-index: 2; /* Below fireworks but above background */
-  display: flex;
-  flex-direction: column;
-  pointer-events: none; /* Let clicks pass through except for ground rockets */
+  height: 60vh;
+  z-index: 2;
+  pointer-events: none;
+  overflow: hidden;
 }
 
-.mountains {
+/* ── Sky Gradient Wash ── */
+.scenery-sky-wash {
   position: absolute;
-  bottom: 30vh; /* Sitting just above the river */
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    transparent 0%,
+    #020408 60%
+  );
+  z-index: 0;
+}
+
+/* ═══════════════════════════════
+   MOUNTAINS
+   ═══════════════════════════════ */
+.mountains-wrap {
+  position: absolute;
+  bottom: 25vh;
+  left: 0;
   width: 100%;
-  height: 25vh;
+  height: 35vh;
+  z-index: 1;
 }
 
 .mountain-layer {
@@ -25,32 +47,170 @@
   height: 100%;
 }
 
-.back-mountain {
+/* Back — tallest, farthest, faintest moonlit edge */
+.mountain-back {
   z-index: 1;
-  transform: scaleY(1.2) translateY(-10%);
-  opacity: 0.8;
+  transform: scaleY(1.25) translateY(-8%);
+  opacity: 0.85;
 }
 
-.mid-mountain {
+/* Mid */
+.mountain-mid {
   z-index: 2;
-  transform: scaleY(0.9);
-  opacity: 0.9;
+  transform: scaleY(1.0);
+  opacity: 0.92;
 }
 
-.front-mountain {
+/* Front — shortest, nearest, most opaque */
+.mountain-front {
   z-index: 3;
-  transform: scaleY(0.6) translateY(20%);
+  transform: scaleY(0.7) translateY(18%);
 }
 
-.river-container {
+/* ═══════════════════════════════
+   TREELINE / GRASS SILHOUETTES
+   ═══════════════════════════════ */
+.treeline-wrap {
+  position: absolute;
+  bottom: 24.5vh;
+  left: 0;
+  width: 100%;
+  height: 4vh;
+  z-index: 4;
+}
+
+.treeline-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ═══════════════════════════════
+   RIVER / WATER
+   ═══════════════════════════════ */
+.river-wrap {
   position: absolute;
   bottom: 0;
   left: 0;
   width: 100%;
-  height: 30vh;
-  z-index: 4;
+  height: 25vh;
+  z-index: 5;
+  overflow: hidden;
 }
 
-.river-svg {
+.river-base-svg {
+  position: absolute;
+  inset: 0;
   display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Moon-Reflection Glow Column ── */
+.moon-reflection-column {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 8vw;
+  height: 100%;
+  z-index: 6;
+  opacity: 0.25;
+  animation: reflection-breathe 6s ease-in-out infinite;
+  pointer-events: none;
+}
+
+.moon-reflection-column svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+@keyframes reflection-breathe {
+  0%, 100% { opacity: 0.22; }
+  50%       { opacity: 0.30; }
+}
+
+/* ── Ripple Overlay (CSS-animated SVG feTurbulence) ── */
+.water-ripple-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 7;
+  pointer-events: none;
+}
+
+.water-ripple-overlay svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Subtle horizontal shimmer lines ── */
+.shimmer-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 8;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.shimmer-line {
+  position: absolute;
+  left: 35%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(160, 200, 255, 0.08) 20%,
+    rgba(200, 225, 255, 0.14) 50%,
+    rgba(160, 200, 255, 0.08) 80%,
+    transparent 100%
+  );
+  animation: shimmer-drift linear infinite;
+  opacity: 0;
+}
+
+.shimmer-line:nth-child(1) {
+  top: 12%;  width: 22vw; animation-duration: 7s;  animation-delay: 0s;
+}
+.shimmer-line:nth-child(2) {
+  top: 28%;  width: 18vw; animation-duration: 9s;  animation-delay: 1.5s;
+}
+.shimmer-line:nth-child(3) {
+  top: 45%;  width: 25vw; animation-duration: 8s;  animation-delay: 3s;
+}
+.shimmer-line:nth-child(4) {
+  top: 62%;  width: 16vw; animation-duration: 11s; animation-delay: 0.5s;
+}
+.shimmer-line:nth-child(5) {
+  top: 78%;  width: 20vw; animation-duration: 10s; animation-delay: 4s;
+}
+.shimmer-line:nth-child(6) {
+  top: 90%;  width: 14vw; animation-duration: 12s; animation-delay: 2s;
+}
+
+@keyframes shimmer-drift {
+  0%   { opacity: 0;    transform: translateX(-2vw); }
+  15%  { opacity: 1; }
+  85%  { opacity: 1; }
+  100% { opacity: 0;    transform: translateX(2vw);  }
+}
+
+/* ── Shore glow — faint light at the waterline ── */
+.shore-glow {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(
+    90deg,
+    transparent 20%,
+    rgba(100, 160, 220, 0.06) 40%,
+    rgba(140, 190, 255, 0.10) 50%,
+    rgba(100, 160, 220, 0.06) 60%,
+    transparent 80%
+  );
+  z-index: 9;
+  filter: blur(2px);
 }

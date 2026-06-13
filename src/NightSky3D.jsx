@@ -9,38 +9,38 @@ import CinematicBurst from './CinematicBurst';
 import './NightSky.css'; 
 import moonTextureImg from './assets/moon_texture.jpg';
 
-// The 3D Moon Component
+// The 3D Moon Component — still, natural, no movement
 const Moon = () => {
   const moonTexture = useTexture(moonTextureImg);
   const moonRef = useRef();
 
+  // Very subtle rotation only — no position changes
   useFrame(() => {
     if (moonRef.current) {
-      moonRef.current.rotation.y += 0.0005; // Slow cinematic rotation
-      moonRef.current.position.y = Math.min(20, moonRef.current.position.y + 0.02);
+      moonRef.current.rotation.y += 0.0002;
     }
   });
 
   return (
-    <group ref={moonRef} position={[0, -10, -50]}>
-      {/* Moon Light Source */}
-      <pointLight intensity={1.5} color="#e6f2ff" distance={200} decay={1.5} />
+    <group ref={moonRef} position={[0, 18, -60]}>
+      {/* Moon Light Source — subtle, natural */}
+      <pointLight intensity={0.8} color="#b8d4f0" distance={150} decay={1.5} />
       
-      {/* Moon Sphere */}
+      {/* Moon Sphere — smaller, more natural size */}
       <mesh>
-        <sphereGeometry args={[15, 64, 64]} />
+        <sphereGeometry args={[8, 64, 64]} />
         <meshStandardMaterial 
           map={moonTexture}
-          emissive={new THREE.Color('#e6f2ff')}
-          emissiveIntensity={0.2}
+          emissive={new THREE.Color('#d0e4ff')}
+          emissiveIntensity={0.15}
           emissiveMap={moonTexture}
         />
       </mesh>
       
-      {/* Outer Glow */}
-      <mesh scale={1.05}>
-        <sphereGeometry args={[15, 32, 32]} />
-        <meshBasicMaterial color="#e6f2ff" transparent opacity={0.1} side={THREE.BackSide} />
+      {/* Subtle Outer Glow */}
+      <mesh scale={1.08}>
+        <sphereGeometry args={[8, 32, 32]} />
+        <meshBasicMaterial color="#d0e4ff" transparent opacity={0.06} side={THREE.BackSide} />
       </mesh>
     </group>
   );
@@ -64,53 +64,57 @@ const NightSky3D = ({ isActive }) => {
 
   return (
     <div className="night-sky-container">
-      {/* Layer 1: True WebGL 3D Canvas (Moon and Stars) */}
-      <div className="canvas-layer" style={{ position: 'absolute', inset: 0, zIndex: 1, pointerEvents: 'none' }}>
-        <Canvas camera={{ position: [0, 2, 10], fov: 60 }}>
-          <color attach="background" args={['transparent']} />
-          <ambientLight intensity={0.1} />
+      {/* Layer 1: WebGL 3D Canvas — Moon & Stars only */}
+      <div className="layer" style={{ zIndex: 1 }}>
+        <Canvas 
+          camera={{ position: [0, 2, 10], fov: 60 }}
+          gl={{ alpha: true }}
+          style={{ background: 'transparent' }}
+        >
+          <ambientLight intensity={0.05} />
           <Suspense fallback={null}>
             <Moon />
           </Suspense>
-          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={0.5} />
         </Canvas>
       </div>
 
       {/* Layer 2: Continuous Background Fireworks */}
-      <div className="fireworks-layer" style={{ position: 'absolute', inset: 0, zIndex: 2, pointerEvents: 'none' }}>
+      <div className="layer" style={{ zIndex: 2 }}>
         <Fireworks
           ref={fireworksRef}
           options={{
-            rocketsPoint: { min: 40, max: 60 },
-            hue: { min: 200, max: 360 },
-            delay: { min: 15, max: 40 }, 
+            rocketsPoint: { min: 30, max: 70 },
+            hue: { min: 0, max: 360 },
+            delay: { min: 20, max: 50 }, 
             speed: 2,
             acceleration: 1.05,
             friction: 0.95,
             gravity: 1.5,
-            particles: 150,
+            particles: 120,
             traceLength: 3,
             traceSpeed: 10,
-            explosion: 6,
-            intensity: 30, // Continuous fire show
-            flickering: 60,
+            explosion: 5,
+            intensity: 25,
+            flickering: 50,
             lineStyle: 'round',
             lineWidth: { explosion: { min: 1, max: 3 }, trace: { min: 1, max: 2 } },
             brightness: { min: 50, max: 80 },
             decay: { min: 0.015, max: 0.03 },
-            mouse: { click: false, move: false, max: 1 }
+            mouse: { click: false, move: false, max: 1 },
+            boundaries: { x: 50, y: 50, width: window.innerWidth - 100, height: window.innerHeight * 0.55 }
           }}
           style={{ width: '100%', height: '100%', mixBlendMode: 'screen' }}
         />
       </div>
 
-      {/* Layer 3: Pure SVG Animated Mountain & River Scenery */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 3, pointerEvents: 'none' }}>
+      {/* Layer 3: Mountains & River Scenery */}
+      <div className="layer" style={{ zIndex: 3 }}>
         <Scenery />
       </div>
 
-      {/* Layer 4: Epic Japanese Cinematic Bursts */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 4, pointerEvents: 'none' }}>
+      {/* Layer 4: Cinematic Burst Explosions */}
+      <div className="layer" style={{ zIndex: 4 }}>
         {bursts.map(burst => (
           <CinematicBurst 
             key={burst.id} 
@@ -121,7 +125,7 @@ const NightSky3D = ({ isActive }) => {
       </div>
 
       {/* Layer 5: Interactive Ground Rockets */}
-      <div style={{ position: 'absolute', inset: 0, zIndex: 5, pointerEvents: 'none' }}>
+      <div className="layer rocket-layer" style={{ zIndex: 5 }}>
         <GroundRocket positionClass="rocket-pos-1" color="#00e5ff" onLaunch={() => handleRocketLaunch('#00e5ff')} />
         <GroundRocket positionClass="rocket-pos-2" color="#ffaa00" onLaunch={() => handleRocketLaunch('#ffaa00')} />
         <GroundRocket positionClass="rocket-pos-3" color="#ff00ff" onLaunch={() => handleRocketLaunch('#ff00ff')} />
