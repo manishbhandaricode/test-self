@@ -74,9 +74,9 @@
       "source_file": "src\\App.jsx",
       "source_location": "L6",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_app_jsx",
-      "target": "src_app_app",
-      "confidence_score": 1.0
+      "target": "src_app_app"
     },
     {
       "relation": "contains",
@@ -84,9 +84,9 @@
       "source_file": "src\\Preloader.jsx",
       "source_location": "L5",
       "weight": 1.0,
+      "confidence_score": 1.0,
       "source": "src_preloader_jsx",
-      "target": "src_preloader_preloader",
-      "confidence_score": 1.0
+      "target": "src_preloader_preloader"
     }
   ],
   "hyperedges": []

@@ -1,0 +1,56 @@
+.scenery-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 40vh; /* Takes up bottom 40% of the screen */
+  z-index: 2; /* Below fireworks but above background */
+  display: flex;
+  flex-direction: column;
+  pointer-events: none; /* Let clicks pass through except for ground rockets */
+}
+
+.mountains {
+  position: absolute;
+  bottom: 30vh; /* Sitting just above the river */
+  width: 100%;
+  height: 25vh;
+}
+
+.mountain-layer {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.back-mountain {
+  z-index: 1;
+  transform: scaleY(1.2) translateY(-10%);
+  opacity: 0.8;
+}
+
+.mid-mountain {
+  z-index: 2;
+  transform: scaleY(0.9);
+  opacity: 0.9;
+}
+
+.front-mountain {
+  z-index: 3;
+  transform: scaleY(0.6) translateY(20%);
+}
+
+.river-container {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 30vh;
+  z-index: 4;
+}
+
+.river-svg {
+  display: block;
+}

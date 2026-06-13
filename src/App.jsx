@@ -1,41 +1,39 @@
 import React, { useState } from 'react';
-import Preloader from './Preloader';
-import './App.css';
 import { motion, AnimatePresence } from 'framer-motion';
+import AirplaneSwitch from './AirplaneSwitch';
+import NightSky from './NightSky';
+import Scenery from './Scenery'; 
+import GroundRocket from './GroundRocket'; 
+import './App.css';
 
 function App() {
-  const [showPreloader, setShowPreloader] = useState(true);
+  const [stage, setStage] = useState('switch'); // 'switch', 'night'
+
+  const handleSwitchToggle = () => {
+    setStage('night');
+  };
 
   return (
-    <>
+    <div className="app-container dark-mode">
+      
+      {/* Night Sky acts as the deep background */}
+      <NightSky isActive={stage === 'night'} />
+      
+      {/* The centered premium switch, which hides after flipping */}
       <AnimatePresence>
-        {showPreloader && (
-          <Preloader 
-            key="preloader" 
-            onComplete={() => setShowPreloader(false)} 
-          />
+        {stage === 'switch' && (
+          <motion.div 
+            className="switch-wrapper"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0, y: 50, scale: 0.9 }}
+            transition={{ duration: 1, ease: "easeInOut" }}
+          >
+            <AirplaneSwitch onToggle={handleSwitchToggle} />
+          </motion.div>
         )}
       </AnimatePresence>
-
-      {/* The main dashboard content */}
-      {!showPreloader && (
-        <motion.div 
-          className="dashboard-container"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 1.2, ease: "easeOut", delay: 0.2 }}
-        >
-          <div className="dashboard-content">
-            <h1 className="text-gradient title">Our Journey</h1>
-            <p className="subtitle">Welcome to our romantic dashboard.</p>
-            
-            <div className="glass-panel blank-slate">
-              <p>Content will appear here later.</p>
-            </div>
-          </div>
-        </motion.div>
-      )}
-    </>
+    </div>
   );
 }
 
