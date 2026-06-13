@@ -6,9 +6,8 @@ const AirplaneSwitch = ({ onToggle }) => {
   const [isOn, setIsOn] = useState(false);
 
   const handleToggle = () => {
-    if (isOn) return; // Only allow turning it on
+    if (isOn) return;
     setIsOn(true);
-    // Wait for the mechanical flip animation before triggering the next stage
     setTimeout(() => {
       if (onToggle) onToggle();
     }, 500); 
@@ -29,7 +28,7 @@ const AirplaneSwitch = ({ onToggle }) => {
         <div className="screw bottom-left"></div>
         <div className="screw bottom-right"></div>
         
-        {/* Tiny LED Indicator */}
+        {/* LED Indicator */}
         <motion.div 
           className="indicator-led"
           animate={{
@@ -38,22 +37,23 @@ const AirplaneSwitch = ({ onToggle }) => {
           }}
         />
 
-        <div className="switch-track">
+        {/* The Premium Push Button */}
+        <div className="button-socket">
           <motion.div 
-            className="switch-lever"
+            className="push-button"
             initial={false}
             animate={{ 
-              rotateX: isOn ? 45 : -45 // Flips up when ON, down when OFF
+              y: isOn ? 12 : 0, // physically presses DOWN into the socket
+              scale: isOn ? 0.98 : 1
             }}
             transition={{
               type: "spring",
-              stiffness: 700,
-              damping: 25,
-              mass: 0.5
+              stiffness: 500,
+              damping: 20
             }}
           >
-            <div className="lever-head"></div>
-            <div className="lever-body"></div>
+            <div className="button-surface"></div>
+            <div className="button-base"></div>
           </motion.div>
         </div>
       </motion.div>

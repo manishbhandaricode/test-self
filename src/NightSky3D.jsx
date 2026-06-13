@@ -1,13 +1,14 @@
 import React, { Suspense, useRef, useState, useEffect } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
-import { useTexture, MeshReflectorMaterial, Stars, Sparkles, Float } from '@react-three/drei';
+import { useTexture, MeshReflectorMaterial, Stars, Sparkles } from '@react-three/drei';
 import * as THREE from 'three';
 import GroundRocket from './GroundRocket';
-import './NightSky.css'; // Keep standard CSS for the DOM elements
+import './NightSky.css'; 
+import moonTextureImg from './assets/moon_texture.jpg';
 
 // The 3D Moon Component
 const Moon = () => {
-  const moonTexture = useTexture('/moon_texture.jpg');
+  const moonTexture = useTexture(moonTextureImg);
   const moonRef = useRef();
 
   useFrame((state) => {
